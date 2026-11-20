@@ -43,9 +43,11 @@ type Anim = (t: number, el: Element) => void;
  * expression copied from a video-html episode. Helpers are passed in, so a
  * fragment never has to redefine ease/span/lock.
  */
-const compile = (source: string): Anim | null => {
+type Compiled = { fn: Anim | null; error: string | null };
+
+const compile = (source: string): Compiled => {
   const code = source.trim();
-  if (!code) return null;
+  if (!code) return { fn: null, error: null };
   const match = code.match(FUNCTION_FORM);
   const body = match ? match[1] : code;
   try {
@@ -69,20 +71,38 @@ const compile = (source: string): Anim | null => {
       $: (id: string) => Element | null,
     ) => void;
 
-    return (t, el) =>
-      fn(
-        t,
-        el,
-        (x) => (x < 0 ? 0 : x > 1 ? 1 : x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2),
-        (value, a, b) => (value - a) / (b - a),
-        (x, a, b) => Math.max(a, Math.min(b, x)),
-        (x, a, b) => Math.max(a, Math.min(b, x)),
-        (id) => el.querySelector(`#${id}`),
-      );
+    return {
+      fn: (t, el) =>
+        fn(
+          t,
+          el,
+          (x) => (x < 0 ? 0 : x > 1 ? 1 : x < 0.5 ? 2 * x * x : 1 - Math.pow(-2 * x + 2, 2) / 2),
+          (value, a, b) => (value - a) / (b - a),
+          (x, a, b) => Math.max(a, Math.min(b, x)),
+          (x, a, b) => Math.max(a, Math.min(b, x)),
+          (id) => el.querySelector(`#${id}`),
+        ),
+      error: null,
+    };
   } catch (error) {
     console.warn("html visual: anim failed to compile", error);
-    return null;
+    return { fn: null, error: String(error) };
   }
+};
+
+/** A broken anim must be visible in the still, not silently static. */
+const showError = (surface: Element, message: string) => {
+  let box = surface.querySelector("#hv-error");
+  if (!box) {
+    box = document.createElement("pre");
+    box.id = "hv-error";
+    box.setAttribute(
+      "style",
+      "position:absolute;left:0;right:0;top:0;margin:0;padding:16px;background:#7a0d24;color:#fff;font:600 20px/1.35 monospace;white-space:pre-wrap;z-index:9",
+    );
+    surface.appendChild(box);
+  }
+  box.textContent = `html visual\n${message}`;
 };
 
 export const HtmlVisual: React.FC<{
@@ -93,7 +113,7 @@ export const HtmlVisual: React.FC<{
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const host = useRef<HTMLDivElement>(null);
-  const anim = useMemo(() => compile(visual.anim || ""), [visual.anim]);
+  const compiled = useMemo(() => compile(visual.anim || ""), [visual.anim]);
   const signature = useMemo(
     () => `${visual.html}\u0000${visual.css || ""}`,
     [visual.html, visual.css],
@@ -118,13 +138,24 @@ export const HtmlVisual: React.FC<{
 
     const surface = root.querySelector("#hv-root");
     if (!surface) return;
+    if (compiled.error) showError(surface, compiled.error);
+    {
+      const dbg = document.createElement("div");
+      dbg.setAttribute(
+        "style",
+        "position:absolute;left:0;bottom:0;padding:8px 12px;background:#000;color:#0f0;font:600 18px monospace;z-index:10",
+      );
+      dbg.textContent = `DBG t=${(frame / fps).toFixed(2)} anim=${typeof visual.anim}:${(visual.anim || "").length} fn=${compiled.fn ? "yes" : compiled.error || "none"}`;
+      surface.appendChild(dbg);
+    }
     try {
       // Scene-relative seconds: t=0 is the first frame of this scene.
-      anim?.(frame / fps, surface);
+      compiled.fn?.(frame / fps, surface);
     } catch (error) {
       console.warn("html visual: anim threw", error);
+      showError(surface, String(error));
     }
-  }, [anim, frame, fps, signature, visual.html, visual.css]);
+  }, [compiled, frame, fps, signature, visual.html, visual.css]);
 
   void scene;
   void scale;
