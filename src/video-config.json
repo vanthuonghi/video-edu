@@ -1,5 +1,5 @@
 {
-  "topic": "học từ vựng tiếng Anh",
+  "topic": "lãi kép — vì sao tiền sinh tiền",
   "theme": {
     "id": "neon",
     "bg": ["#000814", "#001028", "#000814"],
@@ -17,93 +17,107 @@
   "music": { "track": "music/bed-neon.mp3", "gainDb": -20 },
   "scenes": [
     {
-      "text": "Học 50 từ một lúc, mai quên gần hết?",
-      "highlight": "quên gần hết",
+      "text": "Gửi 10 triệu, 20 năm sau thành gần 47 triệu?",
+      "highlight": "47 triệu",
       "kind": "hook",
-      "visual": { "type": "icons", "icons": ["spark"], "label": "Trí nhớ ngắn hạn" },
+      "visual": { "type": "counter", "value": "47", "unit": "triệu", "label": "sau 20 năm" },
       "startMs": 0,
-      "endMs": 3400
+      "endMs": 7000
     },
     {
-      "text": "Không phải trí nhớ bạn kém.",
-      "highlight": "trí nhớ",
-      "kind": "body",
-      "visual": "auto",
-      "startMs": 3500,
-      "endMs": 6400
-    },
-    {
-      "text": "Học dồn một lúc không bằng học đều mỗi ngày.",
-      "highlight": "đều mỗi ngày",
+      "text": "Trong tiếng Anh, lãi kép là compound interest.",
+      "highlight": "compound interest",
       "kind": "body",
       "visual": {
-        "type": "compare",
-        "before": "50 từ trong một tối",
-        "after": "5 từ mỗi ngày"
+        "type": "wordcard",
+        "title": "Từ vựng",
+        "word": "compound interest",
+        "phonetic": "/ˈkɒm.paʊnd ˈɪn.trəst/",
+        "meaning": "Lãi kép: lãi của kỳ này được cộng vào gốc để tính lãi kỳ sau.",
+        "example": "Compound interest turns small savings into a large sum."
       },
-      "startMs": 6500,
-      "endMs": 11000
+      "startMs": 7000,
+      "endMs": 14500
     },
     {
-      "text": "Chia nhỏ mục tiêu thành 5 từ mỗi ngày.",
-      "highlight": "5 từ",
-      "kind": "body",
-      "visual": { "type": "counter", "value": "5", "unit": "từ", "label": "mỗi ngày" },
-      "startMs": 11100,
-      "endMs": 14200
-    },
-    {
-      "text": "Ôn lại sau 1 ngày, 3 ngày và 7 ngày.",
-      "highlight": "7 ngày",
+      "text": "Công thức chỉ có ba biến: gốc, lãi suất, số năm.",
+      "highlight": "ba biến",
       "kind": "body",
       "visual": {
-        "type": "steps",
-        "title": "Lịch ôn tập",
-        "steps": ["Sau 1 ngày", "Sau 3 ngày", "Sau 7 ngày"]
+        "type": "formula",
+        "title": "Công thức lãi kép",
+        "formula": "A = P × (1 + r)^{n}",
+        "steps": ["P — số tiền gốc", "r — lãi suất mỗi năm", "n — số năm gửi"],
+        "result": "A — số tiền sau n năm"
       },
-      "startMs": 14300,
-      "endMs": 18400
+      "startMs": 14500,
+      "endMs": 23500
     },
     {
-      "text": "Mỗi lần ôn chỉ mất khoảng 2 phút.",
-      "highlight": "2 phút",
+      "text": "10 triệu, lãi 8% một năm, sau 5 năm thành 14,7 triệu.",
+      "highlight": "14,7 triệu",
       "kind": "body",
       "visual": {
         "type": "bars",
-        "title": "Thời gian mỗi ngày",
-        "unit": "phút",
+        "title": "10 triệu ở mức 8%/năm",
+        "unit": "triệu",
         "values": [
-          { "label": "Học mới", "value": 12 },
-          { "label": "Ôn lại", "value": 2 }
+          { "label": "5 năm", "value": 14.7 },
+          { "label": "10 năm", "value": 21.6 },
+          { "label": "20 năm", "value": 46.6 }
         ]
       },
-      "startMs": 18500,
-      "endMs": 21800
+      "startMs": 23500,
+      "endMs": 31000
     },
     {
-      "text": "Đặt từ vào câu bạn tự nói mỗi ngày.",
-      "highlight": "tự nói",
+      "text": "Ba dòng Python: gán gốc, nhân 1,08 mũ 20, in ra.",
+      "highlight": "Ba dòng Python",
       "kind": "body",
       "visual": {
-        "type": "phone",
-        "title": "Ghi chú hôm nay",
-        "messages": [
-          { "from": "them", "text": "Hôm nay bạn học gì?" },
-          { "from": "me", "text": "I learn five new words." }
-        ]
+        "type": "code",
+        "language": "python",
+        "title": "Tính sau 20 năm",
+        "lines": [
+          "p = 10_000_000",
+          "a = p * (1 + 0.08) ** 20",
+          "print(f\"{a:,.0f}\")"
+        ],
+        "cues": ["gán gốc", "nhân 1,08 mũ 20", "in ra"]
       },
-      "startMs": 21900,
-      "endMs": 25800
+      "startMs": 31000,
+      "endMs": 40000
     },
     {
-      "text": "Lưu lại và bắt đầu ngay hôm nay.",
-      "highlight": "hôm nay",
+      "text": "Sau 20 năm, bạn có gần 470% số tiền ban đầu.",
+      "highlight": "470%",
+      "kind": "body",
+      "visual": { "type": "counter", "value": "470", "unit": "%", "label": "so với gốc" },
+      "startMs": 40000,
+      "endMs": 47000
+    },
+    {
+      "text": "Bắt đầu sớm 10 năm, kết quả khác hẳn.",
+      "highlight": "sớm 10 năm",
+      "kind": "body",
+      "visual": {
+        "type": "compare",
+        "title": "10 năm quan trọng thế nào",
+        "before": "Bắt đầu ở tuổi 35",
+        "after": "Bắt đầu ở tuổi 25"
+      },
+      "startMs": 47000,
+      "endMs": 55000
+    },
+    {
+      "text": "Lưu lại và theo dõi phần tiếp theo nhé.",
+      "highlight": "phần tiếp theo",
       "kind": "cta",
       "visual": { "type": "icons", "icons": ["heart", "bell"] },
-      "startMs": 25900,
-      "endMs": 29000
+      "startMs": 55000,
+      "endMs": 62000
     }
   ],
-  "totalMs": 29000,
+  "totalMs": 62000,
   "hasAudio": false
 }

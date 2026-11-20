@@ -146,14 +146,19 @@ jobs:
           cfg = json.load(open("src/video-config.json", encoding="utf-8"))
           fps = cfg.get("fps", 30)
           scenes = cfg["scenes"]
-          picks = sorted({0, len(scenes) // 2, len(scenes) - 1})
+          # One still per scene (up to 12) so a visual can be reviewed without
+          # watching the whole video, and a broken scene is visible before the
+          # two-minute render.
+          picks = list(range(min(len(scenes), 12)))
           for n, i in enumerate(picks, 1):
               s = scenes[i]
               frame = int((s["startMs"] + s["endMs"]) / 2000 * fps)
-              out = f"out/preview-{n}.png"
+              out = f"out/preview-{n:02d}.png"
               subprocess.run(["npx", "remotion", "still", "src/Root.tsx", "Video", out,
                               f"--frame={frame}"], check=True)
-              print(f"{out}: scene {i + 1} frame {frame}")
+              v = s.get("visual")
+              kind = v.get("type") if isinstance(v, dict) else (v or "auto")
+              print(f"{out}: scene {i + 1} [{kind}] frame {frame}")
           PY
 
       - name: Upload previews

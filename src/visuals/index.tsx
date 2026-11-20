@@ -4,50 +4,10 @@ import { Scene, THEME, Visual } from "../config";
 import { ease, useStage, withAlpha } from "../stage";
 import { Icon } from "./icons";
 import { resolveVisual } from "./auto";
-
-/* ------------------------------------------------------------------ */
-/* Shared chrome for every visual                                      */
-/* ------------------------------------------------------------------ */
-
-const Panel: React.FC<{
-  scale: number;
-  children: React.ReactNode;
-  style?: React.CSSProperties;
-}> = ({ scale, children, style }) => (
-  <div
-    style={{
-      width: "100%",
-      boxSizing: "border-box",
-      borderRadius: Math.round(36 * scale),
-      background: `linear-gradient(165deg, ${withAlpha(THEME.text, 0.1)}, ${withAlpha(
-        THEME.text,
-        0.028,
-      )})`,
-      border: `1px solid ${withAlpha(THEME.text, 0.13)}`,
-      boxShadow: `0 ${Math.round(24 * scale)}px ${Math.round(64 * scale)}px rgba(0,0,0,0.42)`,
-      padding: Math.round(34 * scale),
-      ...style,
-    }}
-  >
-    {children}
-  </div>
-);
-
-const Title: React.FC<{ text?: string; scale: number }> = ({ text, scale }) =>
-  text ? (
-    <div
-      style={{
-        fontSize: Math.round(26 * scale),
-        fontWeight: 700,
-        letterSpacing: "0.14em",
-        textTransform: "uppercase",
-        color: withAlpha(THEME.text, 0.6),
-        marginBottom: Math.round(24 * scale),
-      }}
-    >
-      {text}
-    </div>
-  ) : null;
+import { Panel, Title } from "./ui";
+import { WordCard } from "./wordcard";
+import { CodeBlock } from "./code";
+import { Formula } from "./formula";
 
 /* ------------------------------------------------------------------ */
 /* 1. Icons — a drawn icon inside a live ring                          */
@@ -824,6 +784,12 @@ export const VisualLayer: React.FC<{ scene: Scene }> = ({ scene }) => {
       return <Counter visual={visual} scale={scale} />;
     case "list":
       return <ListScene visual={visual} scale={scale} />;
+    case "wordcard":
+      return <WordCard visual={visual} scale={scale} />;
+    case "code":
+      return <CodeBlock visual={visual} scene={scene} scale={scale} />;
+    case "formula":
+      return <Formula visual={visual} scale={scale} />;
     case "photo":
       return <Photo visual={visual} scale={scale} />;
     default:

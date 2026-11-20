@@ -1,8 +1,9 @@
 # 🎬 video-edu
 
 Video bài giảng ngắn (**9:16 / 4:5 / 1:1 / 16:9**) với **hình động thật sự** — icon vẽ nét,
-biểu đồ cột, các bước, khung chat, so sánh trước/sau, con số đếm — cộng thêm caption chạy
-theo từng từ khớp giọng đọc. Không footage, không API ảnh, không API key bắt buộc.
+biểu đồ cột, các bước, khung chat, so sánh trước/sau, con số đếm, **thẻ từ vựng**, **khối code
+có dòng đang đọc được tô sáng** và **công thức hiện từng bước** — cộng thêm caption chạy theo
+từng từ khớp giọng đọc. Không footage, không API ảnh, không API key bắt buộc.
 
 - **Giọng đọc**: edge-tts neural của Microsoft (`vi-VN-HoaiMyNeural` / `vi-VN-NamMinhNeural`) — miễn phí.
 - **Timing từng từ**: faster-whisper đo trực tiếp từ audio (fallback: chia theo âm tiết).
@@ -96,6 +97,9 @@ Tuỳ chọn: `--theme neon|warm|paper`, `--format 9:16|4:5|1:1|16:9`,
 | `compare` | Hai thẻ Trước / Sau | `before`, `after`, `title` |
 | `phone` | Khung chat tự hiện tin | `messages[{from,text}]` (≤ 4), `title` |
 | `list` | Checklist tự tick | `items[]` (≤ 4), `title` |
+| `wordcard` | Thẻ từ: từ + phiên âm + nghĩa + ví dụ | `word`, `meaning`, `phonetic`, `example`, `title` |
+| `code` | Khối code, dòng đang đọc sáng lên | `lines[]`, `language`, `cues[]`, `title` |
+| `formula` | Công thức hiện từng bước | `formula`, `steps[]` (≤ 4), `result`, `title` |
 | `photo` | Ảnh tĩnh + Ken Burns | `image` (trong `public/`), `caption` |
 | `"auto"` | Chọn icon theo từ khoá trong câu | — |
 
@@ -105,6 +109,36 @@ rocket coin spark bell search gear star shield users phone list heart eye play a
 
 `highlight` được khớp **nguyên cụm, theo thứ tự**, nên `"giảm độ sáng"` không làm sáng chữ
 `độ` nằm trong `chế độ`. Quality gate cảnh báo nếu cụm này không có trong câu.
+
+### Hình mang nội dung
+
+Ba loại hình dưới đây không chỉ trang trí mà chứa chính bài học:
+
+```jsonc
+// Thẻ từ vựng: từ, phiên âm, nghĩa, một câu ví dụ
+{ "type": "wordcard", "word": "compound interest", "phonetic": "/ˈkɒm.paʊnd ˈɪn.trəst/",
+  "meaning": "Lãi kép: lãi của kỳ này cộng vào gốc để tính lãi kỳ sau.",
+  "example": "Compound interest turns small savings into a large sum." }
+
+// Khối code: dòng đang được đọc tự tô sáng theo timing của giọng
+{ "type": "code", "language": "python",
+  "lines": ["p = 10_000_000", "a = p * (1 + 0.08) ** 20", "print(f\"{a:,.0f}\")"],
+  "cues": ["gán gốc", "nhân 1,08 mũ 20", "in ra"] }
+
+// Công thức: hiện biểu thức, rồi từng bước, rồi kết quả
+{ "type": "formula", "formula": "A = P × (1 + r)^{n}",
+  "steps": ["P — số tiền gốc", "r — lãi suất mỗi năm", "n — số năm gửi"],
+  "result": "A — số tiền sau n năm" }
+```
+
+- **`cues[]`** (code): mỗi phần tử là một cụm **có thật trong `scenes[].text`**, ứng với một
+dòng code. Khi giọng đọc tới cụm đó, dòng ấy sáng lên — timing lấy từ `words[]` mà
+`prepare.py` đã đo. Không có cue (hoặc cue không khớp) thì thời lượng scene được chia cho
+các dòng theo độ dài, highlight vẫn chạy nhưng không bám lời.
+- **`formula`** hỗ trợ `^{...}` và `_{...}` (ví dụ `(1 + r)^{n}`), không cần LaTeX/KaTeX.
+- Cả ba đều vẽ bằng React/SVG, không tải gì thêm — render trên CI vẫn offline.
+- Giới hạn để không tràn khung: `word` ≤ 34 ký tự, `meaning` ≤ 110, code ≤ 8 dòng (≤ 46 ký tự/dòng),
+công thức ≤ 34 ký tự, ≤ 4 bước. Quality gate cảnh báo khi vượt.
 
 `scenes[].text` nên là **một câu mỗi scene**, tối đa ~88 ký tự (caption tối đa 3 dòng).
 
@@ -141,11 +175,11 @@ và không cần key.
 `topic`, `scenes`, `theme`, `voice`, `format`, `brand`, `caption`, `music`, `brief`.
 
 Các bước: build config → edge-tts + faster-whisper → probe aligner → quality gate →
-render 3 ảnh preview → render video → tạo release `latest` → upload artifact.
+render ảnh preview cho **từng scene** (tối đa 12) → render video → tạo release `latest` → upload artifact.
 
 - Video: `https://github.com/<owner>/<repo>/releases/download/latest/video.mp4`
 - Artifact: tab Actions → run → `video-edu-video` (giữ 14 ngày)
-- Preview: `video-edu-previews` (3 khung hình, giữ 7 ngày)
+- Preview: `video-edu-previews` (mỗi scene một khung hình, giữ 7 ngày)
 
 Secret tuỳ chọn:
 
@@ -177,7 +211,9 @@ src/
   Background.tsx    gradient + quầng sáng + vignette + grain
   config.ts         type + hằng số từ video-config.json
   stage.ts          scale theo khung, clamp/ease/withAlpha
-  visuals/          icon, biểu đồ, bước, chat, so sánh, con số, checklist, ảnh
+  visuals/          icon, biểu đồ, bước, chat, so sánh, con số, checklist,
+                    thẻ từ, khối code, công thức, ảnh
+  visuals/ui.tsx    Panel + Title dùng chung cho các hình
 scripts/
   build_config.py   brief/topic → video-config.json
   script_writer.py  LLM (tuỳ chọn) + khung bài giảng dự phòng

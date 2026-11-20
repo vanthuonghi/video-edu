@@ -28,6 +28,9 @@ const VISUALS = [
   ["compare", "Trước / Sau"],
   ["phone", "Khung chat"],
   ["list", "Checklist"],
+  ["wordcard", "Thẻ từ vựng"],
+  ["code", "Khối code"],
+  ["formula", "Công thức từng bước"],
   ["photo", "Ảnh tĩnh (Ken Burns)"],
 ];
 
@@ -144,6 +147,30 @@ function seedVisual(type, scene) {
       const items = clauses(text);
       return { type: "list", title: "", items: items.length >= 2 ? items : ["Việc 1", "Việc 2"] };
     }
+    case "wordcard":
+      return {
+        type: "wordcard",
+        word: scene.highlight || "từ mới",
+        phonetic: "",
+        meaning: "",
+        example: "",
+      };
+    case "code":
+      return {
+        type: "code",
+        language: "python",
+        title: "",
+        lines: ["total = 0", "total = total + 1", "print(total)"],
+        cues: [],
+      };
+    case "formula":
+      return {
+        type: "formula",
+        title: "",
+        formula: "A = P × (1 + r)^{n}",
+        steps: ["P — số tiền gốc", "r — lãi suất", "n — số năm"],
+        result: "A — kết quả",
+      };
     case "photo":
       return { type: "photo", image: "images/example.jpg", caption: scene.highlight || "" };
     default:
@@ -200,6 +227,27 @@ function paramsHtml(scene) {
           <input data-p="before" value="${escapeHtml(v.before || "")}" placeholder="Trước">
           <input data-p="after" value="${escapeHtml(v.after || "")}" placeholder="Sau">
         </div>`;
+    case "wordcard":
+      return `
+        <div class="grid-2">
+          <input data-p="word" value="${escapeHtml(v.word || "")}" placeholder="Từ hoặc cụm từ">
+          <input data-p="phonetic" value="${escapeHtml(v.phonetic || "")}" placeholder="/phiên âm/">
+        </div>
+        <input data-p="meaning" value="${escapeHtml(v.meaning || "")}" placeholder="Nghĩa">
+        <input data-p="example" value="${escapeHtml(v.example || "")}" placeholder="Câu ví dụ (tuỳ chọn)">`;
+    case "code":
+      return `${title}
+        <div class="grid-2">
+          <input data-p="language" value="${escapeHtml(v.language || "")}" placeholder="Ngôn ngữ (python, js…)">
+          <input data-p="cues" value="${escapeHtml((v.cues || []).join(" | "))}" placeholder="Cụm lời đọc cho từng dòng, cách nhau bởi |">
+        </div>
+        <textarea data-p="lines" rows="4" placeholder="Mỗi dòng một dòng code">${escapeHtml((v.lines || []).join("\n"))}</textarea>
+        <p class="hint">Dòng đang được đọc sẽ sáng lên: mỗi cue khớp một cụm trong câu của scene.</p>`;
+    case "formula":
+      return `${title}
+        <input data-p="formula" value="${escapeHtml(v.formula || "")}" placeholder="A = P × (1 + r)^{n}">
+        <textarea data-p="steps" rows="3" placeholder="Mỗi dòng một bước">${escapeHtml((v.steps || []).join("\n"))}</textarea>
+        <input data-p="result" value="${escapeHtml(v.result || "")}" placeholder="Dòng kết quả">`;
     case "photo":
       return `
         <div class="grid-2">
@@ -326,8 +374,10 @@ scenesEl.addEventListener("change", (event) => {
 function applyParam(scene, key, value) {
   const v = scene.visual;
   if (!v) return;
-  if (key === "steps" || key === "items") {
-    v[key === "steps" ? "steps" : "items"] = lines(value);
+  if (key === "steps" || key === "items" || key === "lines") {
+    v[key] = lines(value);
+  } else if (key === "cues") {
+    v.cues = String(value || "").split("|").map((s) => s.trim()).filter(Boolean);
   } else if (key === "values") {
     v.values = lines(value).map((line) => {
       const [label, ...rest] = line.split(":");

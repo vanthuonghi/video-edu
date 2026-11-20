@@ -16,7 +16,8 @@ CONFIG = ROOT / "src" / "video-config.json"
 PUBLIC = ROOT / "public"
 MP3 = PUBLIC / "voiceover.mp3"
 
-VISUAL_TYPES = ["icons", "bars", "steps", "phone", "compare", "counter", "list", "photo"]
+VISUAL_TYPES = ["icons", "bars", "steps", "phone", "compare", "counter", "list",
+                "wordcard", "code", "formula", "photo"]
 ICONS = ["clock", "bolt", "bulb", "chart", "check", "book", "target", "rocket", "coin",
          "spark", "bell", "search", "gear", "star", "shield", "users", "calendar",
          "play", "phone", "list", "heart", "eye", "arrowUp", "doc"]
@@ -47,7 +48,19 @@ def contrast(a, b):
     return (hi + 0.05) / (lo + 0.05)
 
 
-def check_visual(tag, visual, errors, warnings):
+def phrase_in_text(text, phrase):
+    """True when `phrase` appears as consecutive words of `text`."""
+    clean = lambda t: [re.sub(r'[.,!?;:…"\'()]', "", w).lower() for w in t.split()]
+    words, phrase_words = clean(text), [w for w in clean(phrase) if w]
+    if not phrase_words:
+        return False
+    return any(
+        words[i:i + len(phrase_words)] == phrase_words
+        for i in range(max(0, len(words) - len(phrase_words) + 1))
+    )
+
+
+def check_visual(tag, visual, text, errors, warnings):
     if visual in (None, "", "auto"):
         return
     if not isinstance(visual, dict):
@@ -98,6 +111,46 @@ def check_visual(tag, visual, errors, warnings):
             errors.append(f"{tag}: list visual needs items[]")
         if len(items) > 4:
             errors.append(f"{tag}: at most 4 checklist items fit the frame")
+    elif kind == "wordcard":
+        word = str(visual.get("word") or "").strip()
+        meaning = str(visual.get("meaning") or "").strip()
+        if not word or not meaning:
+            errors.append(f"{tag}: wordcard needs word and meaning")
+        if len(word) > 34:
+            warnings.append(f"{tag}: word {len(word)} chars is long for one card line")
+        if len(meaning) > 110:
+            warnings.append(f"{tag}: meaning {len(meaning)} chars will crowd the card")
+        if len(str(visual.get("example") or "")) > 96:
+            warnings.append(f"{tag}: example is long; keep it to one sentence")
+    elif kind == "code":
+        lines = visual.get("lines") or []
+        if not isinstance(lines, list) or not lines:
+            errors.append(f"{tag}: code visual needs a non-empty lines[]")
+        else:
+            if len(lines) > 8:
+                warnings.append(f"{tag}: {len(lines)} code lines is cramped (max 8)")
+            for line in lines:
+                if len(str(line)) > 46:
+                    warnings.append(f"{tag}: code line is {len(str(line))} chars and will clip")
+        cues = visual.get("cues")
+        if cues:
+            if len(cues) != len(lines):
+                errors.append(f"{tag}: cues[] needs one entry per code line")
+            else:
+                for cue in cues:
+                    if cue and not phrase_in_text(text, str(cue)):
+                        warnings.append(
+                            f"{tag}: cue {cue!r} is not in the sentence (that line won't light in time)"
+                        )
+    elif kind == "formula":
+        formula = str(visual.get("formula") or "").strip()
+        if not formula:
+            errors.append(f"{tag}: formula visual needs a formula")
+        if len(formula) > 34:
+            warnings.append(f"{tag}: formula {len(formula)} chars is long; split it into steps")
+        steps = visual.get("steps") or []
+        if len(steps) > 4:
+            errors.append(f"{tag}: at most 4 formula steps fit the frame")
     elif kind == "photo":
         image = (visual.get("image") or "").strip()
         if not image:
@@ -142,20 +195,13 @@ def main():
         dur = (s["endMs"] - s["startMs"]) / 1000
         n = len(s["text"])
 
-        check_visual(tag, s.get("visual"), errors, warnings)
+        check_visual(tag, s.get("visual"), s["text"], errors, warnings)
 
         # The renderer matches highlight as a whole phrase, so a highlight that
         # is not literally in the sentence silently highlights nothing.
         hl = (s.get("highlight") or "").strip()
-        if hl:
-            clean = lambda t: [re.sub(r'[.,!?;:…"\'()]', "", w).lower() for w in t.split()]
-            text_words, hl_words = clean(s["text"]), clean(hl)
-            hit = any(
-                text_words[i:i + len(hl_words)] == hl_words
-                for i in range(max(0, len(text_words) - len(hl_words) + 1))
-            )
-            if not hit:
-                warnings.append(f"{tag}: highlight {hl!r} is not in the sentence (nothing lights up)")
+        if hl and not phrase_in_text(s["text"], hl):
+            warnings.append(f"{tag}: highlight {hl!r} is not in the sentence (nothing lights up)")
 
         if dur < MIN_SCENE_S:
             errors.append(f"{tag}: {dur:.2f}s is too quick to read")

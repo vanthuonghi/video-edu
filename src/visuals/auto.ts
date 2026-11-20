@@ -97,6 +97,50 @@ export const resolveVisual = (scene: Scene): Visual => {
       if (!items.length) return autoVisual(scene);
       return { type: "list", items, title: visual.title };
     }
+    case "wordcard": {
+      const word = (visual.word || "").trim();
+      const meaning = (visual.meaning || "").trim();
+      if (!word || !meaning) return autoVisual(scene);
+      return {
+        type: "wordcard",
+        word,
+        meaning,
+        phonetic: visual.phonetic?.trim() || undefined,
+        example: visual.example?.trim() || undefined,
+        title: visual.title?.trim() || undefined,
+      };
+    }
+    case "code": {
+      if (!Array.isArray(visual.lines)) return autoVisual(scene);
+      const lines = visual.lines
+        .map((line) => String(line).replace(/\s+$/, ""))
+        .filter((line) => line.trim())
+        .slice(0, 10);
+      if (!lines.length) return autoVisual(scene);
+      const cues = (visual.cues || []).map((cue) => String(cue).trim()).slice(0, lines.length);
+      return {
+        type: "code",
+        lines,
+        language: visual.language?.trim() || undefined,
+        title: visual.title?.trim() || undefined,
+        cues: cues.some(Boolean) ? cues : undefined,
+      };
+    }
+    case "formula": {
+      const formula = (visual.formula || "").trim();
+      if (!formula) return autoVisual(scene);
+      const steps = (visual.steps || [])
+        .map((step) => String(step).trim())
+        .filter(Boolean)
+        .slice(0, 4);
+      return {
+        type: "formula",
+        formula,
+        steps: steps.length ? steps : undefined,
+        result: visual.result?.trim() || undefined,
+        title: visual.title?.trim() || undefined,
+      };
+    }
     case "photo": {
       if (!visual.image?.trim()) return autoVisual(scene);
       return visual;

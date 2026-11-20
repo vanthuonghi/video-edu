@@ -26,6 +26,29 @@ export type Visual =
   | { type: "compare"; before: string; after: string; title?: string }
   | { type: "counter"; value: string; label?: string; unit?: string }
   | { type: "list"; items: string[]; title?: string }
+  | {
+      type: "wordcard";
+      word: string;
+      meaning: string;
+      phonetic?: string;
+      example?: string;
+      title?: string;
+    }
+  | {
+      type: "code";
+      lines: string[];
+      language?: string;
+      title?: string;
+      /** Spoken phrases that introduce each line; lights that line in time. */
+      cues?: string[];
+    }
+  | {
+      type: "formula";
+      formula: string;
+      steps?: string[];
+      result?: string;
+      title?: string;
+    }
   | { type: "photo"; image: string; caption?: string };
 
 export const VISUAL_TYPES = [
@@ -36,6 +59,9 @@ export const VISUAL_TYPES = [
   "compare",
   "counter",
   "list",
+  "wordcard",
+  "code",
+  "formula",
   "photo",
 ] as const;
 
