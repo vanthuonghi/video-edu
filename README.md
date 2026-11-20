@@ -100,6 +100,7 @@ Tuỳ chọn: `--theme neon|warm|paper`, `--format 9:16|4:5|1:1|16:9`,
 | `wordcard` | Thẻ từ: từ + phiên âm + nghĩa + ví dụ | `word`, `meaning`, `phonetic`, `example`, `title` |
 | `code` | Khối code, dòng đang đọc sáng lên | `lines[]`, `language`, `cues[]`, `title` |
 | `formula` | Công thức hiện từng bước | `formula`, `steps[]` (≤ 4), `result`, `title` |
+| `html` | Hình tự viết bằng HTML/CSS + `anim(t)` | `html`, `css`, `anim`, `full` |
 | `photo` | Ảnh tĩnh + Ken Burns | `image` (trong `public/`), `caption` |
 | `"auto"` | Chọn icon theo từ khoá trong câu | — |
 
@@ -136,6 +137,34 @@ dòng code. Khi giọng đọc tới cụm đó, dòng ấy sáng lên — timin
 `prepare.py` đã đo. Không có cue (hoặc cue không khớp) thì thời lượng scene được chia cho
 các dòng theo độ dài, highlight vẫn chạy nhưng không bám lời.
 - **`formula`** hỗ trợ `^{...}` và `_{...}` (ví dụ `(1 + r)^{n}`), không cần LaTeX/KaTeX.
+
+### HTML visual — cửa thoát hiểm cho hình không khuôn nào chứa vừa
+
+Khi 11 loại trên không diễn tả được ý bạn muốn, viết thẳng HTML/CSS và một hàm vẽ:
+
+```jsonc
+{ "type": "html",
+  "html": "<div class='chart'><i id='b1'></i><i id='b2'></i></div>",
+  "css": ".chart{display:flex;gap:20px;height:500px;align-items:flex-end}",
+  "anim": "$('b1').style.height = ease(span(t,0,1))*100 + '%';\n$('b2').style.height = ease(span(t,1,2))*47 + '%';" }
+```
+
+- **Hợp đồng giống hệt `video-html`**: `anim(t, el)` là **hàm thuần theo `t`** (giây, tính từ đầu scene),
+mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước. Vì vậy một cảnh viết cho pipeline
+`chup-nhanh.py` chạy được ở đây gần như nguyên vẹn.
+- Có sẵn `ease, span, lock, clamp, $` (giống bộ helper bên đó), `$` tìm trong chính visual.
+  Nhận cả dạng thân hàm lẫn `function(t, el){...}` dán nguyên từ `do-hoa/*.html`.
+- **Cô lập**: markup nằm trong shadow root nên `h1`, `.card` của bạn không đụng caption/chrome.
+- **`full: true`** vẽ tràn cả khung thay vì nằm trong dải trên — dùng khi hình tự lo bố cục;
+  caption vẫn nằm trên cùng nên chừa vùng dưới.
+- Ảnh: dùng `{{asset:images/x.jpg}}` (được đổi thành URL `staticFile`), không dùng đường dẫn tương đối.
+- **Không tải gì từ mạng** (CI chạy offline) và **không có `<script>`**: mọi thứ chạy trong `anim`.
+- Gate chặn: thiếu `html`, quá 8000 ký tự, có `<script>`, có `http(s)://`; cảnh báo khi `anim`
+  dùng `document./window./setTimeout/requestAnimationFrame/Math.random/Date.now` (khung sẽ không tất định).
+- Đây là **mã do chủ repo viết**, giống một template — đừng nhận `html`/`anim` từ người lạ.
+
+Ví dụ dùng thật: `brief_html_demo.json` (biểu đồ đường cong trí quên, chuyển từ kiểu vẽ của
+`video-html`).
 - Cả ba đều vẽ bằng React/SVG, không tải gì thêm — render trên CI vẫn offline.
 - Giới hạn để không tràn khung: `word` ≤ 34 ký tự, `meaning` ≤ 110, code ≤ 8 dòng (≤ 46 ký tự/dòng),
 công thức ≤ 34 ký tự, ≤ 4 bước. Quality gate cảnh báo khi vượt.
@@ -212,8 +241,9 @@ src/
   config.ts         type + hằng số từ video-config.json
   stage.ts          scale theo khung, clamp/ease/withAlpha
   visuals/          icon, biểu đồ, bước, chat, so sánh, con số, checklist,
-                    thẻ từ, khối code, công thức, ảnh
+                    thẻ từ, khối code, công thức, html tự viết, ảnh
   visuals/ui.tsx    Panel + Title dùng chung cho các hình
+  visuals/html.tsx  html visual: shadow root + anim(t) chạy mỗi khung
 scripts/
   build_config.py   brief/topic → video-config.json
   script_writer.py  LLM (tuỳ chọn) + khung bài giảng dự phòng

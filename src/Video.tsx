@@ -255,6 +255,12 @@ const SceneLayer: React.FC<{ scene: Scene; index: number; total: number }> = ({
   const opacity = (isFirst ? Math.min(1, frame / 6) : enter) * (1 - exit);
   const slide = isFirst ? 0 : (1 - enter) * Math.round(46 * stage.scale);
 
+  // A full-frame HTML visual draws its own composition behind the caption
+  // instead of being boxed into the upper band.
+  const rawVisual = scene.visual;
+  const fullHtml =
+    rawVisual !== undefined && rawVisual !== "auto" && rawVisual.type === "html" && Boolean(rawVisual.full);
+
   const visualTop = Math.round(height * VISUAL_TOP);
   const visualHeight = Math.round(height * (VISUAL_BOTTOM - VISUAL_TOP));
   const captionTop = Math.round(height * CAPTION_TOP);
@@ -262,20 +268,26 @@ const SceneLayer: React.FC<{ scene: Scene; index: number; total: number }> = ({
 
   return (
     <AbsoluteFill style={{ opacity, transform: `translateY(${slide}px)` }}>
-      <div
-        style={{
-          position: "absolute",
-          left: stage.padX,
-          right: stage.padX,
-          top: visualTop,
-          height: visualHeight,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <VisualLayer scene={scene} />
-      </div>
+      {fullHtml ? (
+        <AbsoluteFill style={{ pointerEvents: "none" }}>
+          <VisualLayer scene={scene} />
+        </AbsoluteFill>
+      ) : (
+        <div
+          style={{
+            position: "absolute",
+            left: stage.padX,
+            right: stage.padX,
+            top: visualTop,
+            height: visualHeight,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <VisualLayer scene={scene} />
+        </div>
+      )}
 
       <div
         style={{

@@ -31,6 +31,7 @@ const VISUALS = [
   ["wordcard", "Thẻ từ vựng"],
   ["code", "Khối code"],
   ["formula", "Công thức từng bước"],
+  ["html", "HTML tuỳ biến"],
   ["photo", "Ảnh tĩnh (Ken Burns)"],
 ];
 
@@ -171,6 +172,13 @@ function seedVisual(type, scene) {
         steps: ["P — số tiền gốc", "r — lãi suất", "n — số năm"],
         result: "A — kết quả",
       };
+    case "html":
+      return {
+        type: "html",
+        html: '<div class="big" id="big">Xin chào</div>',
+        css: ".big{font-size:88px;font-weight:900;color:#eaf6ff}",
+        anim: "$('#big').style.opacity = ease(span(t, 0, 0.8));",
+      };
     case "photo":
       return { type: "photo", image: "images/example.jpg", caption: scene.highlight || "" };
     default:
@@ -248,6 +256,12 @@ function paramsHtml(scene) {
         <input data-p="formula" value="${escapeHtml(v.formula || "")}" placeholder="A = P × (1 + r)^{n}">
         <textarea data-p="steps" rows="3" placeholder="Mỗi dòng một bước">${escapeHtml((v.steps || []).join("\n"))}</textarea>
         <input data-p="result" value="${escapeHtml(v.result || "")}" placeholder="Dòng kết quả">`;
+    case "html":
+      return `
+        <textarea data-p="html" rows="4" placeholder="HTML của hình">${escapeHtml(v.html || "")}</textarea>
+        <textarea data-p="css" rows="3" placeholder="CSS (cô lập trong shadow root)">${escapeHtml(v.css || "")}</textarea>
+        <textarea data-p="anim" rows="3" placeholder="anim: cập nhật style theo t (giây của scene)">${escapeHtml(v.anim || "")}</textarea>
+        <p class="hint">Có sẵn <code>ease, span, lock, clamp, $</code>. Ảnh: <code>{{asset:images/x.jpg}}</code>.</p>`;
     case "photo":
       return `
         <div class="grid-2">

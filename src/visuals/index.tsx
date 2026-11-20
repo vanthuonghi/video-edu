@@ -8,6 +8,7 @@ import { Panel, Title } from "./ui";
 import { WordCard } from "./wordcard";
 import { CodeBlock } from "./code";
 import { Formula } from "./formula";
+import { HtmlVisual } from "./html";
 
 /* ------------------------------------------------------------------ */
 /* 1. Icons — a drawn icon inside a live ring                          */
@@ -790,6 +791,8 @@ export const VisualLayer: React.FC<{ scene: Scene }> = ({ scene }) => {
       return <CodeBlock visual={visual} scene={scene} scale={scale} />;
     case "formula":
       return <Formula visual={visual} scale={scale} />;
+    case "html":
+      return <HtmlVisual visual={visual} scene={scene} scale={scale} />;
     case "photo":
       return <Photo visual={visual} scale={scale} />;
     default:

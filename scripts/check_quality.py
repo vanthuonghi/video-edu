@@ -17,7 +17,7 @@ PUBLIC = ROOT / "public"
 MP3 = PUBLIC / "voiceover.mp3"
 
 VISUAL_TYPES = ["icons", "bars", "steps", "phone", "compare", "counter", "list",
-                "wordcard", "code", "formula", "photo"]
+                "wordcard", "code", "formula", "html", "photo"]
 ICONS = ["clock", "bolt", "bulb", "chart", "check", "book", "target", "rocket", "coin",
          "spark", "bell", "search", "gear", "star", "shield", "users", "calendar",
          "play", "phone", "list", "heart", "eye", "arrowUp", "doc"]
@@ -151,6 +151,33 @@ def check_visual(tag, visual, text, errors, warnings):
         steps = visual.get("steps") or []
         if len(steps) > 4:
             errors.append(f"{tag}: at most 4 formula steps fit the frame")
+    elif kind == "html":
+        html = str(visual.get("html") or "").strip()
+        css = str(visual.get("css") or "")
+        anim = str(visual.get("anim") or "")
+        if not html:
+            errors.append(f"{tag}: html visual needs html markup")
+        if len(html) > 8000:
+            errors.append(f"{tag}: html visual is {len(html)} chars (max 8000)")
+        if len(css) > 8000:
+            errors.append(f"{tag}: html visual css is {len(css)} chars (max 8000)")
+        if len(anim) > 6000:
+            errors.append(f"{tag}: html visual anim is {len(anim)} chars (max 6000)")
+        lowered = f"{html}\n{css}".lower()
+        if "<script" in lowered:
+            errors.append(f"{tag}: html visual may not contain <script> (use anim)")
+        if re.search(r"https?://", lowered):
+            errors.append(f"{tag}: html visual must not load remote URLs (CI renders offline)")
+        if re.search(r"\son[a-z]+\s*=", lowered):
+            warnings.append(f"{tag}: inline event handlers in html are ignored; animate in anim")
+        for bad in ("document.", "window.", "setTimeout", "setInterval",
+                    "requestAnimationFrame", "Math.random", "Date.now"):
+            if bad in anim:
+                warnings.append(
+                    f"{tag}: {bad} in anim makes a frame depend on more than t"
+                )
+        if not anim:
+            warnings.append(f"{tag}: html visual has no anim, so it renders static")
     elif kind == "photo":
         image = (visual.get("image") or "").strip()
         if not image:

@@ -49,6 +49,16 @@ export type Visual =
       result?: string;
       title?: string;
     }
+  | {
+      type: "html";
+      /** Markup for the visual; mounted inside a shadow root. */
+      html: string;
+      css?: string;
+      /** Pure `anim(t, el)` body (or a `function(t, el){...}` expression). */
+      anim?: string;
+      /** Draw across the whole frame instead of the upper visual band. */
+      full?: boolean;
+    }
   | { type: "photo"; image: string; caption?: string };
 
 export const VISUAL_TYPES = [
@@ -62,6 +72,7 @@ export const VISUAL_TYPES = [
   "wordcard",
   "code",
   "formula",
+  "html",
   "photo",
 ] as const;
 

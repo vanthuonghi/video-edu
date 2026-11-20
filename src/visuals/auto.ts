@@ -141,6 +141,17 @@ export const resolveVisual = (scene: Scene): Visual => {
         title: visual.title?.trim() || undefined,
       };
     }
+    case "html": {
+      const html = (visual.html || "").trim();
+      if (!html) return autoVisual(scene);
+      return {
+        type: "html",
+        html,
+        css: visual.css?.trim() || undefined,
+        anim: visual.anim?.trim() || undefined,
+        full: Boolean(visual.full),
+      };
+    }
     case "photo": {
       if (!visual.image?.trim()) return autoVisual(scene);
       return visual;
