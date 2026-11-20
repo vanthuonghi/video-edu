@@ -1,0 +1,45 @@
+{
+  "topic": "ôn tập theo chu kỳ",
+  "theme": "neon",
+  "format": "9:16",
+  "voice": "vi-VN-HoaiMyNeural",
+  "caption": "karaoke",
+  "music": "neon",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Học một lần rồi bỏ, kiến thức trôi mất một nửa trong tuần đầu.",
+      "highlight": "trôi mất một nửa",
+      "kind": "hook",
+      "visual": {
+        "type": "counter",
+        "value": "47",
+        "unit": "%",
+        "label": "mất sau 7 ngày"
+      }
+    },
+    {
+      "text": "Một năm có 52 tuần, ôn đều thì nhớ gần như trọn vẹn.",
+      "highlight": "52 tuần",
+      "kind": "body",
+      "visual": {
+        "type": "html",
+        "full": true,
+        "html": "<div class='f-wrap'><div class='f-kicker'>Ôn tập theo chu kỳ</div><div class='f-row'><div class='f-ring'><svg viewBox='0 0 200 200'><circle class='tr' cx='100' cy='100' r='86'></circle><circle class='pg' id='pg' cx='100' cy='100' r='86'></circle></svg><div class='f-mid'><b id='num'>0</b><span>tuần đã ôn</span></div></div><div class='f-col'><div class='f-chip' id='c1'><b>10 phút</b><span>mỗi ngày</span></div><div class='f-chip' id='c2'><b>3 lần</b><span>nhắc lại mỗi tuần</span></div><div class='f-chip' id='c3'><b>90%</b><span>còn nhớ sau một năm</span></div></div></div></div>",
+        "css": ".f-wrap{position:absolute;left:6%;right:6%;top:12%;height:44%;display:flex;flex-direction:column;justify-content:center}.f-kicker{font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:22px}.f-row{display:flex;align-items:center;gap:44px;flex:1;min-height:0}.f-ring{position:relative;width:400px;height:400px;flex:0 0 auto;max-height:100%}.f-ring svg{width:100%;height:100%;transform:rotate(-90deg)}.tr{fill:none;stroke:rgba(200,220,255,.14);stroke-width:8}.pg{fill:none;stroke:#00d4ff;stroke-width:8;stroke-linecap:round;stroke-dasharray:540;stroke-dashoffset:540;filter:drop-shadow(0 0 10px rgba(0,212,255,.55))}.f-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}.f-mid b{font-size:104px;font-weight:900;color:#eaf6ff;line-height:1;font-variant-numeric:tabular-nums}.f-mid span{font-size:22px;color:#9bb3c4;letter-spacing:.06em}.f-col{flex:1;display:flex;flex-direction:column;gap:18px;min-width:0}.f-chip{display:flex;flex-direction:column;gap:4px;padding:20px 26px;border-radius:22px;background:rgba(200,220,255,.06);border:1px solid rgba(200,220,255,.14);opacity:0}.f-chip b{font-size:36px;font-weight:800;color:#eaf6ff}.f-chip span{font-size:22px;color:#9bb3c4}",
+        "anim": "const p = ease(span(t, 0.2, 2.2));\n$('pg').style.strokeDashoffset = 540 - 540 * p;\n$('num').textContent = Math.round(p * 52);\n$('c1').style.opacity = ease(span(t, 0.6, 1.1));\n$('c2').style.opacity = ease(span(t, 1.0, 1.5));\n$('c3').style.opacity = ease(span(t, 1.4, 1.9));\n"
+      }
+    },
+    {
+      "text": "Chỉ mười phút mỗi ngày, mỗi tuần thêm một ô được tô.",
+      "highlight": "một ô được tô",
+      "kind": "body",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>52 tuần, mỗi tuần một ô</div><div class='grid'><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class='legend'><span><i class='sw on'></i>đã ôn</span><span><i class='sw'></i>chưa tới</span></div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;gap:24px}.kicker{font-size:26px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800}.grid{display:grid;grid-template-columns:repeat(13,1fr);gap:12px}.grid i{display:block;aspect-ratio:1;border-radius:8px;background:rgba(200,220,255,.12);border:1px solid rgba(200,220,255,.18)}.legend{display:flex;gap:26px;font-size:22px;color:#9bb3c4;align-items:center}.legend span{display:flex;align-items:center;gap:10px}.sw{width:18px;height:18px;border-radius:5px;display:block;background:rgba(200,220,255,.12);border:1px solid rgba(200,220,255,.2)}.sw.on{background:#00d4ff;border-color:#00d4ff}",
+        "anim": "const cells = el.querySelectorAll('.grid i');\nfor (let i = 0; i < cells.length; i++) {\n  const p = ease(span(t, 0.15 + i * 0.03, 0.45 + i * 0.03));\n  cells[i].style.opacity = 0.35 + 0.65 * p;\n  cells[i].style.background = p > 0.5 ? '#00d4ff' : 'rgba(200,220,255,0.12)';\n  cells[i].style.borderColor = p > 0.5 ? '#00d4ff' : 'rgba(200,220,255,0.2)';\n}\n"
+      }
+    }
+  ]
+}

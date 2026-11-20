@@ -8,6 +8,15 @@ import { interpolate, useVideoConfig } from "remotion";
  */
 export const BASE_WIDTH = 1080;
 
+/*
+ * Vertical split of a scene, as fractions of the frame height: the visual owns
+ * the band between VISUAL_TOP and VISUAL_BOTTOM, the spoken sentence sits below.
+ * Kept here because both the layout and the html visual (which sizes itself
+ * against the band) need the same numbers.
+ */
+export const VISUAL_TOP = 0.085;
+export const VISUAL_BOTTOM = 0.56;
+
 export const clamp = (v: number, lo: number, hi: number) =>
   Math.min(Math.max(v, lo), hi);
 

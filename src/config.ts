@@ -56,7 +56,11 @@ export type Visual =
       css?: string;
       /** Pure `anim(t, el)` body (or a `function(t, el){...}` expression). */
       anim?: string;
-      /** Draw across the whole frame instead of the upper visual band. */
+      /**
+       * Draw across the whole frame instead of the upper visual band. px values
+       * are the same 1080x720 reference either way: the html visual derives
+       * its `--u` unit from whatever box it actually gets.
+       */
       full?: boolean;
     }
   | { type: "photo"; image: string; caption?: string };

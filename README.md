@@ -156,6 +156,11 @@ mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước.
   nhận cả `$('b1')` lẫn `$('#b1')`. Nhận cả dạng thân hàm lẫn `function(t, el){...}` dán nguyên
   từ `do-hoa/*.html` của repo `video-html`.
 - **Cô lập**: markup nằm trong shadow root nên `h1`, `.card` của bạn không đụng caption/chrome.
+- **Tự co giãn**: viết số đo bằng `px` trên khung tham chiếu **1080×720** của dải hình. Mỗi `Npx`
+  được đổi thành `calc(N * var(--u))`, và `--u` đo từ khung thật của cảnh — 1.0 trên 9:16,
+  ~0.7 trên 1:1/16:9, và theo cả khung khi `full: true`. Cùng một đoạn HTML vì thế khớp
+  4:5, 1:1, 16:9 mà không phải viết lại; `%`, `fr`, `em` cũng tự co theo hộp chứa.
+  Trong `anim`, nếu cần gán px thì dùng `calc(... * var(--u, 1px))`; còn lại nên dùng `%`.
 - **`full: true`** vẽ tràn cả khung thay vì nằm trong dải trên — dùng khi hình tự lo bố cục;
   caption vẫn nằm trên cùng nên chừa vùng dưới.
 - Ảnh: dùng `{{asset:images/x.jpg}}` (được đổi thành URL `staticFile`), không dùng đường dẫn tương đối.
@@ -165,7 +170,8 @@ mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước.
 - Đây là **mã do chủ repo viết**, giống một template — đừng nhận `html`/`anim` từ người lạ.
 
 Ví dụ dùng thật: `brief_html_demo.json` (biểu đồ đường cong trí quên, chuyển từ kiểu vẽ của
-`video-html`).
+`video-html`) và `brief_html_full_demo.json` (vòng 52 tuần dùng `full: true`, cộng một lưới tuần
+để thấy cùng một cách viết px co giãn theo khung).
 - Cả ba đều vẽ bằng React/SVG, không tải gì thêm — render trên CI vẫn offline.
 - Giới hạn để không tràn khung: `word` ≤ 34 ký tự, `meaning` ≤ 110, code ≤ 8 dòng (≤ 46 ký tự/dòng),
 công thức ≤ 34 ký tự, ≤ 4 bước. Quality gate cảnh báo khi vượt.

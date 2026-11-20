@@ -13,7 +13,7 @@ import { Background } from "./Background";
 import { Caption } from "./Caption";
 import { BRAND, CFG, CHROME, hasTimings, Scene, THEME } from "./config";
 import { fontsReady } from "./fonts";
-import { clamp, ease, useStage, withAlpha } from "./stage";
+import { clamp, ease, useStage, VISUAL_BOTTOM, VISUAL_TOP, withAlpha } from "./stage";
 import { VisualLayer } from "./visuals";
 
 void fontsReady;
@@ -25,11 +25,9 @@ void fontsReady;
 /**
  * Portrait-first split: the motion graphic owns the upper half, the spoken
  * sentence sits in the lower third. Ratios (not pixels) keep it intact on
- * 4:5, 1:1 and 16:9.
+ * 4:5, 1:1 and 16:9; the top two live in stage.ts.
  */
-const VISUAL_TOP = 0.085;
-const VISUAL_BOTTOM = 0.56;
-const CAPTION_TOP = 0.56;
+const CAPTION_TOP = VISUAL_BOTTOM;
 const CAPTION_BOTTOM = 0.9;
 
 /* ------------------------------------------------------------------ */
