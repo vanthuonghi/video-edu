@@ -143,7 +143,7 @@ export const CodeBlock: React.FC<{
   times.forEach((t, i) => {
     if (nowMs >= t) active = i;
   });
-  const fontSize = Math.round(28 * scale);
+  const fontSize = Math.round(34 * scale);
   const lineHeight = 1.62;
 
   return (
@@ -191,7 +191,7 @@ export const CodeBlock: React.FC<{
                 borderRadius: Math.round(12 * scale),
                 background: isActive ? withAlpha(THEME.accent, 0.14) : "transparent",
                 border: `1px solid ${isActive ? withAlpha(THEME.accent, 0.35) : "transparent"}`,
-                opacity: enter * (isActive ? 1 : 0.5),
+                opacity: enter * (isActive ? 1 : 0.58),
                 transition: "none",
               }}
             >

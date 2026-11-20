@@ -98,7 +98,11 @@ const layoutScene = (
   usable: number,
 ): { lines: string[][]; fontSize: number } => {
   const phrases = splitPhrases(text);
-  const blocks = phrases.length ? phrases : [splitWords(text)];
+  // A sentence with more phrase breaks than allowed lines would force a
+  // 4-line caption that no font size can fix (each break is its own line), so
+  // fall back to plain wrapping and let the words fill the lines evenly.
+  const blocks =
+    phrases.length > 1 && phrases.length <= MAX_LINES ? phrases : [splitWords(text)];
 
   let fontSize = MIN_FONT_SIZE;
   for (let candidate = Math.max(MIN_FONT_SIZE, Math.round(base)); candidate >= MIN_FONT_SIZE; candidate -= 3) {
