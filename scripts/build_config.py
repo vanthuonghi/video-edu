@@ -77,11 +77,17 @@ def _read_brief(value):
     """Accept inline JSON or a path (also the @path convention)."""
     if not value:
         return {}
-    text = value
+    text = value.strip()
     if text.startswith("@"):
         text = Path(text[1:]).read_text(encoding="utf-8")
-    elif Path(text).is_file():
-        text = Path(text).read_text(encoding="utf-8")
+    elif text.startswith("{"):
+        pass  # inline JSON: never probe it as a path (long briefs overflow ENAMETOOLONG)
+    else:
+        try:
+            if Path(text).is_file():
+                text = Path(text).read_text(encoding="utf-8")
+        except OSError:
+            pass
     try:
         parsed = json.loads(text)
     except json.JSONDecodeError as exc:
