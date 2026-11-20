@@ -1,0 +1,89 @@
+{
+  "topic": "20/11 - Lời cảm ơn gửi thầy cô",
+  "theme": "warm",
+  "format": "9:16",
+  "caption": "karaoke",
+  "music": "warm",
+  "voice": "vi-VN-HoaiMyNeural",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Hôm nay là 20/11. Hỉ ngồi nhớ lại những người đã dạy mình.",
+      "highlight": "nhớ lại",
+      "visual": {
+        "type": "icons",
+        "icons": ["book", "heart"],
+        "label": "20/11"
+      }
+    },
+    {
+      "text": "Không phải họ dạy mình công thức. Mà dạy cách đặt câu hỏi.",
+      "highlight": "cách đặt câu hỏi",
+      "visual": {
+        "type": "compare",
+        "title": "Học gì",
+        "before": "Công thức",
+        "after": "Cách hỏi"
+      }
+    },
+    {
+      "text": "Cô dạy Hỉ đọc chậm lại, để hiểu chữ đang nói gì.",
+      "highlight": "đọc chậm lại",
+      "visual": {
+        "type": "icons",
+        "icons": ["eye", "book"],
+        "label": "Hiểu trước"
+      }
+    },
+    {
+      "text": "Thầy bắt Hỉ đứng dậy trình bày, dù giọng lúc đó còn run.",
+      "highlight": "còn run",
+      "visual": {
+        "type": "steps",
+        "title": "Bài học đầu",
+        "steps": ["Đứng dậy", "Mở miệng", "Kể lại", "Tự tin hơn"]
+      }
+    },
+    {
+      "text": "Có người chỉ dạy một tiết. Nhưng để lại cách nhìn suốt đời.",
+      "highlight": "cách nhìn suốt đời",
+      "visual": {
+        "type": "icons",
+        "icons": ["spark", "star"],
+        "label": "Một tiết học"
+      }
+    },
+    {
+      "text": "Thầy cô không biết hết tên học trò sau này. Vẫn dạy như thể từng người đều quan trọng.",
+      "highlight": "từng người đều quan trọng",
+      "visual": {
+        "type": "list",
+        "title": "Vẫn dạy",
+        "items": ["Giải thích lại", "Chờ bạn hiểu", "Không bỏ cuộc", "Tin bạn giỏi hơn"]
+      }
+    },
+    {
+      "text": "Hôm nay Hỉ gửi lời cảm ơn đến mọi thầy cô, dù đã hay còn đang đứng trên bục giảng.",
+      "highlight": "lời cảm ơn",
+      "visual": {
+        "type": "phone",
+        "title": "Gửi thầy cô",
+        "messages": [
+          {"from": "you", "text": "Con nhớ lời thầy dạy"},
+          {"from": "them", "text": "Cứ đặt câu hỏi nhé"},
+          {"from": "you", "text": "Con vẫn đang hỏi"},
+          {"from": "them", "text": "Ừ, thế là được"}
+        ]
+      }
+    },
+    {
+      "text": "Còn bạn, có một người thầy hay người cô nào bạn nhớ mãi? Comment tên họ bên dưới nhé.",
+      "highlight": "nhớ mãi",
+      "visual": {
+        "type": "icons",
+        "icons": ["heart", "users"],
+        "label": "Cảm ơn thầy cô"
+      }
+    }
+  ]
+}

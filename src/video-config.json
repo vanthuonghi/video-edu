@@ -1,15 +1,15 @@
 {
-  "topic": "Phương pháp Cornell - Ghi chú để nhớ lâu hơn",
+  "topic": "20/11 - Lời cảm ơn gửi thầy cô",
   "theme": {
-    "id": "neon",
+    "id": "warm",
     "bg": [
-      "#000814",
-      "#001028",
-      "#000814"
+      "#1a0f08",
+      "#2a1a0e",
+      "#120a06"
     ],
-    "text": "#eaf6ff",
-    "accent": "#00d4ff",
-    "muted": "#ff2e88"
+    "text": "#fff3e0",
+    "accent": "#ffb347",
+    "muted": "#ff7043"
   },
   "brand": "Văn Hỉ Official",
   "voice": "vi-VN-HoaiMyNeural",
@@ -25,13 +25,13 @@
     "progress": true
   },
   "music": {
-    "track": "music/bed-neon.mp3",
+    "track": "music/bed-warm.mp3",
     "gainDb": -20
   },
   "scenes": [
     {
-      "text": "Đọc xong một trang sách, gập lại là quên gần hết?",
-      "highlight": "quên gần hết",
+      "text": "Hôm nay là 20/11. Hỉ ngồi nhớ lại những người đã dạy mình.",
+      "highlight": "nhớ lại",
       "kind": "hook",
       "startMs": 0,
       "endMs": 0,
@@ -39,124 +39,130 @@
         "type": "icons",
         "icons": [
           "book",
-          "eye"
+          "heart"
         ],
-        "label": "Đọc thụ động"
+        "label": "20/11"
       }
     },
     {
-      "text": "Không phải trí nhớ bạn kém. Chỉ là bạn chưa ghi đúng cách.",
-      "highlight": "chưa ghi đúng cách",
+      "text": "Không phải họ dạy mình công thức. Mà dạy cách đặt câu hỏi.",
+      "highlight": "cách đặt câu hỏi",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "compare",
-        "title": "Đọc vs Ghi",
-        "before": "Đọc rồi quên",
-        "after": "Ghi rồi nhớ"
+        "title": "Học gì",
+        "before": "Công thức",
+        "after": "Cách hỏi"
       }
     },
     {
-      "text": "Cornell chia mỗi trang giấy thành bốn phần.",
-      "highlight": "bốn phần",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
-        "type": "steps",
-        "title": "Trang Cornell",
-        "steps": [
-          "Tiêu đề",
-          "Ghi chú",
-          "Câu hỏi",
-          "Tóm tắt"
-        ]
-      }
-    },
-    {
-      "text": "Đầu trang là tiêu đề. Ghi đúng chủ đề bạn đang học.",
-      "highlight": "tiêu đề",
+      "text": "Cô dạy Hỉ đọc chậm lại, để hiểu chữ đang nói gì.",
+      "highlight": "đọc chậm lại",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "icons",
         "icons": [
-          "doc",
-          "target"
+          "eye",
+          "book"
         ],
-        "label": "Chủ đề"
+        "label": "Hiểu trước"
       }
     },
     {
-      "text": "Bên phải là cột ghi chú. Viết bằng từ của chính bạn.",
-      "highlight": "từ của chính bạn",
+      "text": "Thầy bắt Hỉ đứng dậy trình bày, dù giọng lúc đó còn run.",
+      "highlight": "còn run",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "steps",
+        "title": "Bài học đầu",
+        "steps": [
+          "Đứng dậy",
+          "Mở miệng",
+          "Kể lại",
+          "Tự tin hơn"
+        ]
+      }
+    },
+    {
+      "text": "Có người chỉ dạy một tiết. Nhưng để lại cách nhìn suốt đời.",
+      "highlight": "cách nhìn suốt đời",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "icons",
+        "icons": [
+          "spark",
+          "star"
+        ],
+        "label": "Một tiết học"
+      }
+    },
+    {
+      "text": "Thầy cô không biết hết tên học trò sau này. Vẫn dạy như thể từng người đều quan trọng.",
+      "highlight": "từng người đều quan trọng",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "list",
-        "title": "Cột ghi chú",
+        "title": "Vẫn dạy",
         "items": [
-          "Ý chính",
-          "Ví dụ",
-          "Con số",
-          "Liên tưởng"
+          "Giải thích lại",
+          "Chờ bạn hiểu",
+          "Không bỏ cuộc",
+          "Tin bạn giỏi hơn"
         ]
       }
     },
     {
-      "text": "Bên trái là cột câu hỏi. Biến mỗi ý thành một câu hỏi.",
-      "highlight": "câu hỏi",
+      "text": "Hôm nay Hỉ gửi lời cảm ơn đến mọi thầy cô, dù đã hay còn đang đứng trên bục giảng.",
+      "highlight": "lời cảm ơn",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "phone",
-        "title": "Tự hỏi",
+        "title": "Gửi thầy cô",
         "messages": [
           {
             "from": "you",
-            "text": "Ý chính là gì?"
+            "text": "Con nhớ lời thầy dạy"
           },
           {
-            "from": "ai",
-            "text": "Viết lại bằng từ của bạn"
+            "from": "them",
+            "text": "Cứ đặt câu hỏi nhé"
           },
           {
             "from": "you",
-            "text": "Áp dụng thế nào?"
+            "text": "Con vẫn đang hỏi"
+          },
+          {
+            "from": "them",
+            "text": "Ừ, thế là được"
           }
         ]
       }
     },
     {
-      "text": "Cuối trang là ba dòng tóm tắt. Tự viết lại từ đầu.",
-      "highlight": "ba dòng",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
-        "type": "counter",
-        "value": 3,
-        "unit": "dòng",
-        "label": "Tóm tắt"
-      }
-    },
-    {
-      "text": "Che cột phải lại, tự trả lời rồi đối chiếu. Nhớ lâu hơn gấp bội.",
-      "highlight": "nhớ lâu hơn",
+      "text": "Còn bạn, có một người thầy hay người cô nào bạn nhớ mãi? Comment tên họ bên dưới nhé.",
+      "highlight": "nhớ mãi",
       "kind": "cta",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "icons",
         "icons": [
-          "check",
-          "spark"
+          "heart",
+          "users"
         ],
-        "label": "Ôn tập chủ động"
+        "label": "Cảm ơn thầy cô"
       }
     }
   ],
