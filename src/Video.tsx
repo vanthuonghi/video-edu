@@ -27,9 +27,9 @@ void fontsReady;
  * sentence sits in the lower third. Ratios (not pixels) keep it intact on
  * 4:5, 1:1 and 16:9.
  */
-const VISUAL_TOP = 0.1;
-const VISUAL_BOTTOM = 0.55;
-const CAPTION_TOP = 0.585;
+const VISUAL_TOP = 0.085;
+const VISUAL_BOTTOM = 0.56;
+const CAPTION_TOP = 0.56;
 const CAPTION_BOTTOM = 0.9;
 
 /* ------------------------------------------------------------------ */

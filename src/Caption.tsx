@@ -81,12 +81,12 @@ const MIN_FONT_SIZE = 34;
 
 /** Base size from sentence length, then step down until it fits 3 lines. */
 const baseSizeFor = (n: number): number => {
-  if (n <= 16) return 76;
-  if (n <= 26) return 68;
-  if (n <= 38) return 60;
-  if (n <= 54) return 54;
-  if (n <= 72) return 48;
-  return 44;
+  if (n <= 16) return 86;
+  if (n <= 26) return 78;
+  if (n <= 38) return 68;
+  if (n <= 54) return 60;
+  if (n <= 72) return 53;
+  return 47;
 };
 
 const countLines = (blocks: string[][], fontSize: number, usable: number) =>

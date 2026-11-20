@@ -65,8 +65,8 @@ const IconScene: React.FC<{
     config: { damping: 13, stiffness: 110, mass: 0.9 },
   });
   const draw = ease(frame, 3, 30);
-  const iconSize = Math.round(230 * scale);
-  const ring = Math.round(360 * scale);
+  const iconSize = Math.round(280 * scale);
+  const ring = Math.round(430 * scale);
   const extras = visual.icons.slice(1, 3);
 
   return (
@@ -222,7 +222,7 @@ const Bars: React.FC<{
   const { fps } = useVideoConfig();
   const values = visual.values;
   const max = Math.max(...values.map((v) => Math.abs(v.value)), 1);
-  const chartH = Math.round(300 * scale);
+  const chartH = Math.round(340 * scale);
 
   return (
     <Panel scale={scale} style={{ maxWidth: Math.round(860 * scale) }}>
@@ -311,7 +311,7 @@ const Steps: React.FC<{
   const { fps } = useVideoConfig();
 
   return (
-    <div style={{ width: "100%", maxWidth: Math.round(880 * scale) }}>
+    <div style={{ width: "100%", maxWidth: Math.round(920 * scale) }}>
       <Title text={visual.title} scale={scale} />
       <div
         style={{
@@ -349,14 +349,14 @@ const Steps: React.FC<{
             >
               <div
                 style={{
-                  width: Math.round(62 * scale),
-                  height: Math.round(62 * scale),
+                  width: Math.round(70 * scale),
+                  height: Math.round(70 * scale),
                   flexShrink: 0,
                   borderRadius: "50%",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontSize: Math.round(30 * scale),
+                  fontSize: Math.round(34 * scale),
                   fontWeight: 900,
                   color: isFirst ? THEME.bg[0] : THEME.text,
                   background: isFirst ? THEME.accent : withAlpha(THEME.text, 0.12),
@@ -366,7 +366,7 @@ const Steps: React.FC<{
               </div>
               <div
                 style={{
-                  fontSize: Math.round(34 * scale),
+                  fontSize: Math.round(38 * scale),
                   fontWeight: 700,
                   lineHeight: 1.25,
                   color: THEME.text,
@@ -674,7 +674,7 @@ const ListScene: React.FC<{
   const items = visual.items;
 
   return (
-    <div style={{ width: "100%", maxWidth: Math.round(880 * scale) }}>
+    <div style={{ width: "100%", maxWidth: Math.round(920 * scale) }}>
       <Title text={visual.title} scale={scale} />
       <div style={{ display: "flex", flexDirection: "column", gap: Math.round(16 * scale) }}>
         {items.map((item, i) => {
