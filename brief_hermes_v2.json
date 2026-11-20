@@ -1,0 +1,136 @@
+{
+  "topic": "Hermes Agent - Trợ lý AI tự học, nhớ lâu và làm việc mọi nơi (ban html scenes)",
+  "theme": "neon",
+  "format": "9:16",
+  "caption": "karaoke",
+  "music": "neon",
+  "voice": "vi-VN-HoaiMyNeural",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Chatbot chỉ trả lời rồi thôi. Hermes thì học được từ chính việc bạn giao.",
+      "highlight": "học được",
+      "visual": {
+        "type": "compare",
+        "title": "Chatbot vs Hermes",
+        "before": "Chatbot: trả lời rồi quên",
+        "after": "Hermes: học lại thành skill"
+      }
+    },
+    {
+      "text": "Hermes Agent là một agent mã nguồn mở, chạy ngay trên máy của bạn.",
+      "highlight": "mã nguồn mở",
+      "visual": {
+        "type": "wordcard",
+        "title": "Hermes Agent",
+        "word": "Hermes",
+        "phonetic": "/ˈhɜː.miːz/",
+        "meaning": "Agent tự cải thiện bằng skill, có bộ nhớ bền, chạy được ở 21 nền tảng.",
+        "example": "Bạn dạy nó một lần, nó nhớ mãi ở những lần sau."
+      }
+    },
+    {
+      "text": "Ba thứ làm nên Hermes: skill, bộ nhớ, và khả năng dùng mọi mô hình.",
+      "highlight": "skill, bộ nhớ",
+      "visual": {
+        "type": "formula",
+        "title": "Công thức Hermes",
+        "formula": "Hermes = Skill + Memory + Model",
+        "steps": [
+          "Skill: quy trình tự học được",
+          "Memory: nhớ xuyên phiên",
+          "Model: đổi provider tùy ý"
+        ],
+        "result": "→ Agent của riêng bạn"
+      }
+    },
+    {
+      "text": "Mỗi lần làm xong một việc, Hermes ghi lại thành skill để dùng lại.",
+      "highlight": "ghi lại thành skill",
+      "visual": {
+        "type": "list",
+        "title": "Self-improving",
+        "items": [
+          "Làm xong việc",
+          "Ghi thành skill",
+          "Lần sau load skill",
+          "Không phải học lại"
+        ]
+      }
+    },
+    {
+      "text": "Hermes có hai vùng: vùng trả lời và vùng tự chạy rộng hơn nhiều.",
+      "highlight": "tự chạy",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Hai chế độ của Hermes</div><div class='eyewrap'><div class='ring outer' id='r1'></div><div class='ring inner' id='r2'></div><div class='eyedot'></div></div><div class='legend'><span class='l1'>Trả lời ngay</span><span class='l2'>Tự chạy nền</span></div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.eyewrap{position:relative;width:100%;height:600px;display:grid;place-items:center}.ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:5px dashed #00d4ff;opacity:0}.ring.inner{border-style:solid;border-color:#ff2e88}.eyedot{width:34px;height:34px;border-radius:50%;background:#eaf6ff;box-shadow:0 0 34px rgba(234,246,255,.65)}.legend{display:flex;gap:40px;justify-content:center;font-size:28px;margin-top:10px}.legend .l1{color:#ff2e88}.legend .l2{color:#00d4ff}",
+        "anim": "const o = ease(span(t, 0.3, 2.0));\nconst i = ease(span(t, 1.2, 2.6));\nconst s1 = sc(250 + o * 310);\n$('r1').style.opacity = o;\n$('r1').style.width = s1 + 'px'; $('r1').style.height = s1 + 'px';\nconst s2 = sc(110 + i * 90);\n$('r2').style.opacity = i;\n$('r2').style.width = s2 + 'px'; $('r2').style.height = s2 + 'px';\n"
+      }
+    },
+    {
+      "text": "Một agent đọc trọn cả cụm việc, không chờ bạn gõ từng lệnh.",
+      "highlight": "trọn cả cụm việc",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Một agent, nhiều việc</div><div class='cluster'><span class='cw'>Agent</span><span class='cw'>đọc</span><span class='cw'>trọn</span><span class='cw sharp'>cả</span><span class='cw'>cụm</span></div><div class='sub'>Một lần giao, agent tự lo nhiều bước.</div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.cluster{display:flex;gap:34px;justify-content:center;font-weight:800;margin-top:6px}.cw{padding:8px 14px;border-radius:20px;color:#6b8399;font-size:64px;outline:5px solid transparent;outline-offset:8px}.cw.sharp{color:#eaf6ff;background:rgba(0,212,255,.12);outline-color:#00d4ff;box-shadow:0 0 26px rgba(0,212,255,.45)}.sub{font-size:30px;line-height:1.4;color:#9bb3c4;margin-top:56px;text-align:center}",
+        "anim": "const ws = el.querySelectorAll('.cw');\nconst prog = clamp(span(t, 0.4, 3.0), 0, 1) * (ws.length - 1);\nws.forEach(function(w, i){ w.classList.toggle('sharp', Math.abs(i - prog) < 0.5); });\n"
+      }
+    },
+    {
+      "text": "Bộ nhớ giữ ngữ cảnh gần đây, phần cũ bị đẩy ra như bảng trắng.",
+      "highlight": "giữ ngữ cảnh",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Bộ nhớ Hermes</div><div class='grid'><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span></div><div class='badge' id='bd'><span class='t'>Giữ ngữ cảnh</span><span class='v'>cả phiên</span></div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;width:100%;max-width:1000px;margin-top:14px}.blk{height:86px;border-radius:12px;background:#00d4ff;opacity:0}.badge{display:inline-flex;align-items:center;gap:16px;margin-top:26px;background:rgba(234,246,255,.06);border:2px solid rgba(234,246,255,.16);border-radius:999px;padding:14px 32px;opacity:0}.badge .t{font-size:30px;color:#9bb3c4}.badge .v{font-size:52px;font-weight:800;color:#eaf6ff}",
+        "anim": "const blocks = el.querySelectorAll('.blk');\nconst filled = ease(span(t, 0.3, 1.7)) * blocks.length;\nblocks.forEach(function(b, i){\n  const on = i < filled;\n  b.style.opacity = on ? 1 : 0;\n  b.style.background = '#00d4ff';\n  if (on) { const age = filled - i; b.style.opacity = age < 3 ? 0.45 : 1; }\n});\nconst drop = ease(span(t, 1.8, 2.5));\nif (drop > 0) {\n  const keepFrom = Math.floor(blocks.length * 0.75);\n  blocks.forEach(function(b, i){\n    if (i < keepFrom) { b.style.opacity = 1 - drop * 0.6; b.style.background = '#7a2341'; }\n  });\n}\n$('bd').style.opacity = ease(span(t, 1.6, 2.1));\n"
+      }
+    },
+    {
+      "text": "Muốn đổi mô hình? Một lệnh là xong. Không bị khoá vào một nhà cung cấp.",
+      "highlight": "đổi mô hình",
+      "visual": {
+        "type": "code",
+        "language": "bash",
+        "title": "Đổi model",
+        "lines": [
+          "hermes model",
+          "hermes config set model.default ...",
+          "hermes fallback add ...",
+          "hermes cron list"
+        ],
+        "cues": [
+          "đổi mô hình",
+          "một lệnh",
+          "không bị khoá",
+          "một nhà cung cấp"
+        ]
+      }
+    },
+    {
+      "text": "Bạn có thể đặt lịch cho agent tự chạy mỗi sáng, kể cả khi bạn không có mặt.",
+      "highlight": "tự chạy mỗi sáng",
+      "visual": {
+        "type": "counter",
+        "value": "24",
+        "unit": "/7",
+        "label": "chạy không nghỉ"
+      }
+    },
+    {
+      "text": "Cài một lần: curl install.sh | bash. Gõ hermes là bắt đầu. Thử đi, miễn phí.",
+      "highlight": "Cài một lần",
+      "visual": {
+        "type": "icons",
+        "icons": [
+          "rocket",
+          "spark",
+          "check"
+        ],
+        "label": "Bắt đầu với Hermes"
+      }
+    }
+  ]
+}
