@@ -152,8 +152,9 @@ Khi 11 loại trên không diễn tả được ý bạn muốn, viết thẳng 
 - **Hợp đồng giống hệt `video-html`**: `anim(t, el)` là **hàm thuần theo `t`** (giây, tính từ đầu scene),
 mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước. Vì vậy một cảnh viết cho pipeline
 `chup-nhanh.py` chạy được ở đây gần như nguyên vẹn.
-- Có sẵn `ease, span, lock, clamp, $` (giống bộ helper bên đó), `$` tìm trong chính visual.
-  Nhận cả dạng thân hàm lẫn `function(t, el){...}` dán nguyên từ `do-hoa/*.html`.
+- Có sẵn `ease, span, lock, clamp, $` (giống bộ helper bên đó), `$` tìm trong chính visual và
+  nhận cả `$('b1')` lẫn `$('#b1')`. Nhận cả dạng thân hàm lẫn `function(t, el){...}` dán nguyên
+  từ `do-hoa/*.html` của repo `video-html`.
 - **Cô lập**: markup nằm trong shadow root nên `h1`, `.card` của bạn không đụng caption/chrome.
 - **`full: true`** vẽ tràn cả khung thay vì nằm trong dải trên — dùng khi hình tự lo bố cục;
   caption vẫn nằm trên cùng nên chừa vùng dưới.
