@@ -1,0 +1,98 @@
+{
+  "topic": "Hermes Agent - Trợ lý AI tự học, nhớ lâu và làm việc mọi nơi",
+  "theme": "neon",
+  "format": "9:16",
+  "caption": "karaoke",
+  "music": "neon",
+  "voice": "vi-VN-HoaiMyNeural",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Chatbot chỉ trả lời rồi thôi. Hermes thì học được từ chính việc bạn giao.",
+      "highlight": "học được",
+      "visual": {
+        "type": "compare",
+        "title": "Chatbot vs Hermes",
+        "before": "Chatbot: trả lời rồi quên",
+        "after": "Hermes: học lại thành skill"
+      }
+    },
+    {
+      "text": "Hermes Agent là một agent mã nguồn mở, chạy ngay trên máy của bạn.",
+      "highlight": "mã nguồn mở",
+      "visual": {
+        "type": "wordcard",
+        "title": "Hermes Agent",
+        "word": "Hermes",
+        "phonetic": "/ˈhɜː.miːz/",
+        "meaning": "Agent tự cải thiện bằng skill, có bộ nhớ bền, chạy được ở 21 nền tảng.",
+        "example": "Bạn dạy nó một lần, nó nhớ mãi ở những lần sau."
+      }
+    },
+    {
+      "text": "Ba thứ làm nên Hermes: skill, bộ nhớ, và khả năng dùng mọi mô hình.",
+      "highlight": "skill, bộ nhớ",
+      "visual": {
+        "type": "formula",
+        "title": "Công thức Hermes",
+        "formula": "Hermes = Skill + Memory + Model",
+        "steps": ["Skill: quy trình tự học được", "Memory: nhớ xuyên phiên", "Model: đổi provider tùy ý"],
+        "result": "→ Agent của riêng bạn"
+      }
+    },
+    {
+      "text": "Mỗi lần làm xong một việc, Hermes ghi lại thành skill để dùng lại.",
+      "highlight": "ghi lại thành skill",
+      "visual": {
+        "type": "list",
+        "title": "Self-improving",
+        "items": ["Làm xong việc", "Ghi thành skill", "Lần sau load skill", "Không phải học lại"]
+      }
+    },
+    {
+      "text": "Bạn có thể gọi Hermes từ Telegram, Discord, Slack, hay ngay trong terminal.",
+      "highlight": "Telegram, Discord, Slack",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Một agent, mọi nơi</div><div class='nodes'><div class='node' id='n1'>Telegram</div><div class='node' id='n2'>Discord</div><div class='node' id='n3'>Slack</div><div class='node' id='n4'>Terminal</div><div class='node' id='n5'>Desktop</div><div class='node' id='n6'>Web</div></div><div class='hub' id='hub'>Hermes</div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800}.nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;width:100%;max-width:1300px}.node{padding:34px 20px;text-align:center;border-radius:24px;background:rgba(200,220,255,.06);border:2px solid rgba(200,220,255,.16);font-size:34px;font-weight:700;color:#9bb3c4;opacity:0}.node.on{color:#eaf6ff;border-color:#00d4ff;background:rgba(0,212,255,.12);box-shadow:0 0 30px rgba(0,212,255,.18)}.hub{padding:28px 70px;border-radius:999px;background:#00d4ff;color:#001018;font-size:48px;font-weight:900;letter-spacing:.02em;opacity:0}",
+        "anim": "const ns = [1,2,3,4,5,6].map(k => $('n'+k));\nns.forEach(function(n,i){ n.classList.toggle('on', ease(span(t, 0.3+i*0.32, 0.9+i*0.32)) > 0.5); n.style.opacity = ease(span(t, 0.2+i*0.3, 0.7+i*0.3)); });\n$('hub').style.opacity = ease(span(t, 1.8, 2.6));\n"
+      }
+    },
+    {
+      "text": "Muốn đổi mô hình? Một lệnh là xong. Không bị khoá vào một nhà cung cấp.",
+      "highlight": "đổi mô hình",
+      "visual": {
+        "type": "code",
+        "language": "bash",
+        "title": "Đổi model",
+        "lines": [
+          "hermes model",
+          "hermes config set model.default ...",
+          "hermes fallback add ...",
+          "hermes cron list"
+        ],
+        "cues": ["đổi mô hình", "một lệnh", "không bị khoá", "một nhà cung cấp"]
+      }
+    },
+    {
+      "text": "Bạn có thể đặt lịch cho agent tự chạy mỗi sáng, kể cả khi bạn không có mặt.",
+      "highlight": "tự chạy mỗi sáng",
+      "visual": {
+        "type": "counter",
+        "value": "24",
+        "unit": "/7",
+        "label": "chạy không nghỉ"
+      }
+    },
+    {
+      "text": "Cài một lần: curl install.sh | bash. Gõ hermes là bắt đầu. Thử đi, miễn phí.",
+      "highlight": "cài một lần",
+      "visual": {
+        "type": "icons",
+        "icons": ["rocket", "spark", "check"],
+        "label": "Bắt đầu với Hermes"
+      }
+    }
+  ]
+}

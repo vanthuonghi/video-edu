@@ -1,5 +1,5 @@
 {
-  "topic": "AI Agent là gì - Nhân viên ảo cho doanh nghiệp",
+  "topic": "Hermes Agent - Trợ lý AI tự học, nhớ lâu và làm việc mọi nơi",
   "theme": {
     "id": "neon",
     "bg": [
@@ -30,124 +30,135 @@
   },
   "scenes": [
     {
-      "text": "Chatbot đợi bạn hỏi. AI Agent tự làm việc khi bạn đi ngủ.",
-      "highlight": "tự làm việc",
+      "text": "Chatbot chỉ trả lời rồi thôi. Hermes thì học được từ chính việc bạn giao.",
+      "highlight": "học được",
       "kind": "hook",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "compare",
-        "title": "Khác nhau",
-        "before": "Chatbot: đợi hỏi",
-        "after": "Agent: tự làm"
+        "title": "Chatbot vs Hermes",
+        "before": "Chatbot: trả lời rồi quên",
+        "after": "Hermes: học lại thành skill"
       }
     },
     {
-      "text": "Một agent là một nhân viên ảo. Nhận việc, rồi tự chạy đến xong.",
-      "highlight": "nhân viên ảo",
+      "text": "Hermes Agent là một agent mã nguồn mở, chạy ngay trên máy của bạn.",
+      "highlight": "mã nguồn mở",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "wordcard",
-        "title": "AI Agent",
-        "word": "agent",
-        "phonetic": "/ˈeɪ.dʒənt/",
-        "meaning": "Nhân viên ảo: nhận mục tiêu, tự quyết các bước, tự chạy đến xong.",
-        "example": "Agent tự viết bài, tự làm ảnh, tự hẹn giờ đăng."
+        "title": "Hermes Agent",
+        "word": "Hermes",
+        "phonetic": "/ˈhɜː.miːz/",
+        "meaning": "Agent tự cải thiện bằng skill, có bộ nhớ bền, chạy được ở 21 nền tảng.",
+        "example": "Bạn dạy nó một lần, nó nhớ mãi ở những lần sau."
       }
     },
     {
-      "text": "Ba thứ tạo nên agent: mục tiêu, công cụ, và bộ nhớ.",
-      "highlight": "mục tiêu, công cụ, và bộ nhớ",
+      "text": "Ba thứ làm nên Hermes: skill, bộ nhớ, và khả năng dùng mọi mô hình.",
+      "highlight": "skill, bộ nhớ",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "formula",
-        "title": "Công thức agent",
-        "formula": "Agent = Mục tiêu + Công cụ + Nhớ",
+        "title": "Công thức Hermes",
+        "formula": "Hermes = Skill + Memory + Model",
         "steps": [
-          "Mục tiêu: việc cần xong",
-          "Công cụ: Sheet, Drive, Buffer",
-          "Nhớ: lịch sử các lần chạy"
+          "Skill: quy trình tự học được",
+          "Memory: nhớ xuyên phiên",
+          "Model: đổi provider tùy ý"
         ],
-        "result": "→ Tự chạy mỗi ngày"
+        "result": "→ Agent của riêng bạn"
       }
     },
     {
-      "text": "Một dòng lệnh khai báo agent: mục tiêu, công cụ, rồi bộ nhớ.",
-      "highlight": "một dòng lệnh",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
-        "type": "code",
-        "language": "python",
-        "title": "Cài đặt agent",
-        "lines": [
-          "agent = Agent(",
-          "  goal=\"nuôi kênh mỗi ngày\",",
-          "  tools=[Sheet, Drive, Buffer],",
-          "  memory=True",
-          ")"
-        ],
-        "cues": [
-          "dòng lệnh",
-          "khai báo agent",
-          "mục tiêu",
-          "công cụ",
-          "bộ nhớ"
-        ]
-      }
-    },
-    {
-      "text": "Mỗi sáng 8h30, một đồng hồ báo thức đánh thức agent.",
-      "highlight": "đồng hồ báo thức",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
-        "type": "html",
-        "full": true,
-        "html": "<div class='ag-wrap'><div class='ag-kicker'>Lịch chạy tự động</div><div class='ag-clock'><svg viewBox='0 0 300 300'><circle class='tr' cx='150' cy='150' r='130'></circle><circle class='pg' id='apg' cx='150' cy='150' r='130'></circle></svg><div class='ag-mid'><b id='ahn'>08:30</b><span>mỗi sáng</span></div></div><div class='ag-steps'><div class='ag-s' id='as1'><b>8h30</b><span>tạo nội dung</span></div><div class='ag-s' id='as2'><b>12h00</b><span>bài đầu lên sóng</span></div><div class='ag-s' id='as3'><b>15h00</b><span>bài thứ hai</span></div></div></div>",
-        "css": ".ag-wrap{position:absolute;left:7%;right:7%;top:11%;height:46%;display:flex;flex-direction:column;justify-content:center;gap:22px}.ag-kicker{font-size:25px;letter-spacing:.15em;text-transform:uppercase;color:#00d4ff;font-weight:800}.ag-clock{position:relative;width:340px;height:340px;max-height:52%;align-self:center}.ag-clock svg{width:100%;height:100%;transform:rotate(-90deg)}.ag-clock .tr{fill:none;stroke:rgba(200,220,255,.13);stroke-width:10}.ag-clock .pg{fill:none;stroke:#00d4ff;stroke-width:10;stroke-linecap:round;stroke-dasharray:817;stroke-dashoffset:817;filter:drop-shadow(0 0 12px rgba(0,212,255,.6))}.ag-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}.ag-mid b{font-size:76px;font-weight:900;color:#eaf6ff;line-height:1;font-variant-numeric:tabular-nums}.ag-mid span{font-size:23px;color:#9bb3c4}.ag-steps{display:flex;flex-direction:column;gap:14px}.ag-s{display:flex;align-items:center;gap:22px;padding:16px 24px;border-radius:18px;background:rgba(200,220,255,.06);border:1px solid rgba(200,220,255,.14);opacity:0}.ag-s b{font-size:32px;font-weight:800;color:#00d4ff;width:120px}.ag-s span{font-size:28px;color:#eaf6ff}",
-        "anim": "const p = ease(span(t, 0.3, 2.4));\n$('apg').style.strokeDashoffset = 817 - 817*p;\n$('as1').style.opacity = ease(span(t,0.6,1.1));\n$('as2').style.opacity = ease(span(t,1.4,1.9));\n$('as3').style.opacity = ease(span(t,2.2,2.7));\n"
-      }
-    },
-    {
-      "text": "Hết model free? Tự đổi model. Hết chìa khóa Google? Tự làm mới.",
-      "highlight": "tự đổi model",
+      "text": "Mỗi lần làm xong một việc, Hermes ghi lại thành skill để dùng lại.",
+      "highlight": "ghi lại thành skill",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "list",
-        "title": "Tự sửa lỗi",
+        "title": "Self-improving",
         "items": [
-          "Hết model → đổi model",
-          "Hết token → tự refresh",
-          "Lỗi render → báo Telegram"
+          "Làm xong việc",
+          "Ghi thành skill",
+          "Lần sau load skill",
+          "Không phải học lại"
         ]
       }
     },
     {
-      "text": "Bạn chỉ cần duyệt chủ đề. Mười lăm phút sáng kiểm tra, phần còn lại agent làm.",
-      "highlight": "duyệt chủ đề",
+      "text": "Bạn có thể gọi Hermes từ Telegram, Discord, Slack, hay ngay trong terminal.",
+      "highlight": "Telegram, Discord, Slack",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Một agent, mọi nơi</div><div class='nodes'><div class='node' id='n1'>Telegram</div><div class='node' id='n2'>Discord</div><div class='node' id='n3'>Slack</div><div class='node' id='n4'>Terminal</div><div class='node' id='n5'>Desktop</div><div class='node' id='n6'>Web</div></div><div class='hub' id='hub'>Hermes</div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:40px}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800}.nodes{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;width:100%;max-width:1300px}.node{padding:34px 20px;text-align:center;border-radius:24px;background:rgba(200,220,255,.06);border:2px solid rgba(200,220,255,.16);font-size:34px;font-weight:700;color:#9bb3c4;opacity:0}.node.on{color:#eaf6ff;border-color:#00d4ff;background:rgba(0,212,255,.12);box-shadow:0 0 30px rgba(0,212,255,.18)}.hub{padding:28px 70px;border-radius:999px;background:#00d4ff;color:#001018;font-size:48px;font-weight:900;letter-spacing:.02em;opacity:0}",
+        "anim": "const ns = [1,2,3,4,5,6].map(k => $('n'+k));\nns.forEach(function(n,i){ n.classList.toggle('on', ease(span(t, 0.3+i*0.32, 0.9+i*0.32)) > 0.5); n.style.opacity = ease(span(t, 0.2+i*0.3, 0.7+i*0.3)); });\n$('hub').style.opacity = ease(span(t, 1.8, 2.6));\n"
+      }
+    },
+    {
+      "text": "Muốn đổi mô hình? Một lệnh là xong. Không bị khoá vào một nhà cung cấp.",
+      "highlight": "đổi mô hình",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "code",
+        "language": "bash",
+        "title": "Đổi model",
+        "lines": [
+          "hermes model",
+          "hermes config set model.default ...",
+          "hermes fallback add ...",
+          "hermes cron list"
+        ],
+        "cues": [
+          "đổi mô hình",
+          "một lệnh",
+          "không bị khoá",
+          "một nhà cung cấp"
+        ]
+      }
+    },
+    {
+      "text": "Bạn có thể đặt lịch cho agent tự chạy mỗi sáng, kể cả khi bạn không có mặt.",
+      "highlight": "tự chạy mỗi sáng",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "counter",
+        "value": "24",
+        "unit": "/7",
+        "label": "chạy không nghỉ"
+      }
+    },
+    {
+      "text": "Cài một lần: curl install.sh | bash. Gõ hermes là bắt đầu. Thử đi, miễn phí.",
+      "highlight": "cài một lần",
       "kind": "cta",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "icons",
         "icons": [
-          "check",
+          "rocket",
           "spark",
-          "rocket"
+          "check"
         ],
-        "label": "Kênh tự chạy"
+        "label": "Bắt đầu với Hermes"
       }
     }
   ],
-  "totalMs": 21000,
+  "totalMs": 24000,
   "hasAudio": false
 }
