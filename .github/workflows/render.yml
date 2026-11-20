@@ -1,0 +1,217 @@
+name: Render video
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+    inputs:
+      brief:
+        description: "JSON brief: {topic, scenes[], theme, format, voice, caption, music, brand}"
+        required: false
+        type: string
+      topic:
+        description: "Chủ đề (dùng khi brief không có scenes[])"
+        required: false
+        type: string
+      scenes:
+        description: "Số scene khi sinh kịch bản từ chủ đề"
+        required: false
+        default: "8"
+        type: string
+      theme:
+        description: "neon | warm | paper"
+        required: false
+        default: "neon"
+        type: string
+      voice:
+        description: "Giọng edge-tts"
+        required: false
+        default: "vi-VN-HoaiMyNeural"
+        type: string
+      format:
+        description: "9:16 | 4:5 | 1:1 | 16:9"
+        required: false
+        default: "9:16"
+        type: string
+      brand:
+        description: "Tên hiển thị trên video"
+        required: false
+        default: "Văn Hỉ Official"
+        type: string
+      caption:
+        description: "karaoke | word-rise | line-mask"
+        required: false
+        default: "karaoke"
+        type: string
+      music:
+        description: "neon | warm | paper | none"
+        required: false
+        default: "neon"
+        type: string
+
+# A second dispatch while one render is running replaces the first: the script
+# is written to the same config file, so two parallel renders would fight.
+concurrency:
+  group: render-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  render:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    env:
+      BRIEF_JSON: ${{ github.event.inputs.brief }}
+      TOPIC: ${{ github.event.inputs.topic }}
+      SCENES: ${{ github.event.inputs.scenes }}
+      THEME: ${{ github.event.inputs.theme }}
+      VOICE: ${{ github.event.inputs.voice }}
+      FORMAT: ${{ github.event.inputs.format }}
+      BRAND: ${{ github.event.inputs.brand }}
+      CAPTION: ${{ github.event.inputs.caption }}
+      MUSIC: ${{ github.event.inputs.music }}
+      # Optional: an OpenAI-compatible key turns a topic into a written script.
+      # Without it build_config.py uses the built-in Vietnamese lesson scaffold.
+      LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+      LLM_BASE_URL: ${{ vars.LLM_BASE_URL }}
+      LLM_MODEL: ${{ vars.LLM_MODEL }}
+      # Whisper model used to measure word timings; "base" is enough.
+      ALIGN_MODEL: base
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install FFmpeg
+        run: sudo apt-get update && sudo apt-get install -y ffmpeg
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install Edge TTS + forced aligner
+        # requests is imported by faster_whisper.utils but no longer pulled in
+        # by huggingface-hub 2.x, so it has to be requested explicitly.
+        run: pip install edge-tts==7.3.1 faster-whisper==1.1.1 requests
+
+      - name: Cache alignment model
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/huggingface
+          key: whisper-ct2-${{ env.ALIGN_MODEL }}
+
+      - name: Build config
+        run: python3 scripts/build_config.py --from-env --print
+
+      - name: Show script
+        run: |
+          python3 - <<'PY'
+          import json
+          d = json.load(open("src/video-config.json", encoding="utf-8"))
+          print("Theme:", d["theme"].get("id"), "| Voice:", d["voice"], "| Format:", d["width"], "x", d["height"])
+          for i, s in enumerate(d["scenes"], 1):
+              v = s.get("visual")
+              kind = v.get("type") if isinstance(v, dict) else (v or "auto")
+              print(f"  {i:02d}. [{s['kind']}/{kind}] {s['text']}")
+          PY
+
+      - name: Prepare voice + timings
+        run: python3 scripts/prepare.py
+
+      - name: Probe forced aligner
+        run: |
+          python3 scripts/align.py --selftest
+          python3 - <<'PY'
+          import glob, sys
+          sys.path.insert(0, "scripts")
+          clips = sorted(glob.glob("public/_tts/*.mp3"))
+          if not clips:
+              print("PROBE: no scene clips to measure")
+              raise SystemExit(0)
+          try:
+              import align
+              words = align.heard_words(clips[0])
+              print(f"PROBE: {clips[0]} -> {len(words)} words",
+                    [(w["t"], w["s"], w["e"]) for w in words[:5]])
+          except Exception as exc:
+              print(f"PROBE FAILED: {type(exc).__name__}: {exc}")
+          PY
+
+      - name: Quality gate
+        run: python3 scripts/check_quality.py
+
+      - name: Preview stills
+        run: |
+          mkdir -p out
+          python3 - <<'PY'
+          import json, subprocess
+          cfg = json.load(open("src/video-config.json", encoding="utf-8"))
+          fps = cfg.get("fps", 30)
+          scenes = cfg["scenes"]
+          picks = sorted({0, len(scenes) // 2, len(scenes) - 1})
+          for n, i in enumerate(picks, 1):
+              s = scenes[i]
+              frame = int((s["startMs"] + s["endMs"]) / 2000 * fps)
+              out = f"out/preview-{n}.png"
+              subprocess.run(["npx", "remotion", "still", "src/Root.tsx", "Video", out,
+                              f"--frame={frame}"], check=True)
+              print(f"{out}: scene {i + 1} frame {frame}")
+          PY
+
+      - name: Upload previews
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-edu-previews
+          path: out/preview-*.png
+          retention-days: 7
+
+      - name: Render video
+        run: npx remotion render src/Root.tsx Video out/video.mp4 --codec h264 --crf 18 --concurrency 4
+
+      - name: Publish the latest render
+        if: success()
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          # A stable public URL for the web UI and for sharing:
+          # https://github.com/<owner>/<repo>/releases/download/latest/video.mp4
+          gh release delete latest --cleanup-tag --yes >/dev/null 2>&1 || true
+          gh release create latest out/video.mp4 \
+            --title "Bản render mới nhất" \
+            --notes "Commit ${GITHUB_SHA:0:7} · run ${GITHUB_RUN_NUMBER} · $(date -u +'%Y-%m-%d %H:%M UTC')"
+
+      - name: Upload video artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: video-edu-video
+          path: out/video.mp4
+          retention-days: 14
+
+      - name: Summary
+        if: success()
+        run: |
+          python3 - <<'PY'
+          import json
+          d = json.load(open("src/video-config.json", encoding="utf-8"))
+          measured = sum(1 for s in d["scenes"] if s.get("alignSource") == "whisper")
+          print("Video rendered.")
+          print(f"Scenes: {len(d['scenes'])} · {d['totalMs']/1000:.1f}s · "
+                f"timings {measured}/{len(d['scenes'])} measured")
+          print(f"Music: {(d.get('music') or {}).get('track') or 'none'}")
+          print(f"Download: https://github.com/{__import__('os').environ['GITHUB_REPOSITORY']}"
+                "/releases/download/latest/video.mp4")
+          PY
+          ls -lh out/video.mp4

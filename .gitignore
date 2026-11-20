@@ -1,0 +1,7 @@
+node_modules/
+out/
+public/voiceover.mp3
+public/_tts/
+.remotion/
+*.log
+.DS_Store

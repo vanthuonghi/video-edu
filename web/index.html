@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>video-edu · studio</title>
+    <meta name="description" content="Tạo video bài giảng ngắn: motion graphics + giọng đọc tiếng Việt, render miễn phí trên GitHub Actions." />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header class="top">
+      <div class="brand">
+        <span class="dot" aria-hidden="true"></span>
+        <div>
+          <h1>video-edu</h1>
+          <p>Motion graphics + giọng đọc · render trên GitHub Actions</p>
+        </div>
+      </div>
+      <div class="top-actions">
+        <span id="status" class="pill">Chưa kết nối</span>
+        <a class="ghost" id="repoLink" href="https://github.com/vanthuonghi/video-edu" target="_blank" rel="noreferrer">Repo ↗</a>
+      </div>
+    </header>
+
+    <main>
+      <section class="panel editor">
+        <div class="row between wrap">
+          <div>
+            <h2>Kịch bản</h2>
+            <p class="hint">Mỗi scene là một câu. Ảnh động tự chọn theo từ khoá, hoặc chọn tay.</p>
+          </div>
+          <div class="row">
+            <button id="presetBtn" class="ghost small" type="button">Mẫu bài giảng</button>
+            <button id="addSceneBtn" class="solid small" type="button">+ Scene</button>
+          </div>
+        </div>
+
+        <div id="scenes" class="scenes"></div>
+
+        <div class="empty-state" id="emptyState">
+          <strong>Chưa có scene nào.</strong>
+          <span>Viết một câu ở trên, bấm “+ Scene”, hoặc nhập chủ đề ở cột phải để AI viết kịch bản (cần LLM_API_KEY trên repo).</span>
+        </div>
+
+        <div class="editor-foot">
+          <button id="jsonOutBtn" class="ghost small" type="button">Tải JSON</button>
+          <label class="ghost small file">
+            Nạp JSON
+            <input id="jsonIn" type="file" accept="application/json,.json" hidden />
+          </label>
+          <span class="hint" id="totalHint"></span>
+        </div>
+      </section>
+
+      <aside class="panel side">
+        <h2>Video</h2>
+
+        <label class="field">
+          <span>Chủ đề (nếu không có scene)</span>
+          <input id="topic" placeholder="VD: cách học từ vựng tiếng Anh" />
+        </label>
+
+        <div class="grid-2">
+          <label class="field">
+            <span>Định dạng</span>
+            <select id="format">
+              <option value="9:16">9:16 · TikTok/Shorts</option>
+              <option value="4:5">4:5 · Feed</option>
+              <option value="1:1">1:1 · Vuông</option>
+              <option value="16:9">16:9 · Ngang</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Giao diện màu</span>
+            <select id="theme">
+              <option value="neon">Neon (tối, cyan)</option>
+              <option value="warm">Warm (tối, cam)</option>
+              <option value="paper">Paper (sáng)</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label class="field">
+            <span>Giọng đọc</span>
+            <select id="voice">
+              <option value="vi-VN-HoaiMyNeural">HoaiMy (nữ)</option>
+              <option value="vi-VN-NamMinhNeural">NamMinh (nam)</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Nhạc nền</span>
+            <select id="music">
+              <option value="neon">Neon</option>
+              <option value="warm">Warm</option>
+              <option value="none">Không nhạc</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="grid-2">
+          <label class="field">
+            <span>Hiệu ứng chữ</span>
+            <select id="caption">
+              <option value="karaoke">Karaoke theo từ</option>
+              <option value="word-rise">Từ bay lên</option>
+              <option value="line-mask">Dòng trượt lên</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Số scene khi sinh từ chủ đề</span>
+            <input id="scenesCount" type="number" min="3" max="10" step="1" value="8" />
+          </label>
+        </div>
+
+        <label class="field">
+          <span>Tên hiển thị trên video</span>
+          <input id="brand" placeholder="Văn Hỉ Official" />
+        </label>
+
+        <details class="settings" id="connection">
+          <summary>Kết nối GitHub <span class="hint" id="connState"></span></summary>
+          <label class="field">
+            <span>Repo (owner/name)</span>
+            <input id="repo" placeholder="vanthuonghi/video-edu" autocomplete="off" />
+          </label>
+          <label class="field">
+            <span>Fine-grained token (Actions: write, Contents: read)</span>
+            <input id="token" type="password" placeholder="github_pat_…" autocomplete="off" />
+          </label>
+          <p class="hint">
+            Token chỉ lưu trong <code>localStorage</code> của trình duyệt này và chỉ gửi tới
+            <code>api.github.com</code>. Tạo token tại GitHub → Settings → Developer settings.
+          </p>
+        </details>
+
+        <button id="createBtn" class="solid wide" type="button">Tạo video trên GitHub</button>
+        <p class="hint" id="createHint">Render mất khoảng 10–20 phút; trang tự cập nhật khi xong.</p>
+
+        <section id="result" class="result" hidden>
+          <h3 id="resultTitle">Kết quả</h3>
+          <video id="resultVideo" controls playsinline preload="none"></video>
+          <div class="row wrap" id="resultLinks"></div>
+        </section>
+
+        <section class="howto">
+          <h3>Dùng bằng CLI</h3>
+          <pre><code>python3 scripts/create.py \
+  --topic "cách học từ vựng" \
+  --push --wait \
+  --download ~/Downloads/bai-hoc.mp4</code></pre>
+          <p class="hint">Hermes hoặc bất kỳ agent nào cũng gọi được lệnh này; kết quả là một JSON object.</p>
+        </section>
+      </aside>
+    </main>
+
+    <footer>
+      <span>Giọng đọc edge-tts · timing đo bằng faster-whisper · motion graphics vẽ bằng SVG/CSS</span>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>
