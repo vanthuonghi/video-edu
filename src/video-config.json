@@ -1,15 +1,15 @@
 {
-  "topic": "20/11 - Lời cảm ơn gửi thầy cô",
+  "topic": "AI Agent là gì - Nhân viên ảo cho doanh nghiệp",
   "theme": {
-    "id": "warm",
+    "id": "neon",
     "bg": [
-      "#1a0f08",
-      "#2a1a0e",
-      "#120a06"
+      "#000814",
+      "#001028",
+      "#000814"
     ],
-    "text": "#fff3e0",
-    "accent": "#ffb347",
-    "muted": "#ff7043"
+    "text": "#eaf6ff",
+    "accent": "#00d4ff",
+    "muted": "#ff2e88"
   },
   "brand": "Văn Hỉ Official",
   "voice": "vi-VN-HoaiMyNeural",
@@ -25,147 +25,129 @@
     "progress": true
   },
   "music": {
-    "track": "music/bed-warm.mp3",
+    "track": "music/bed-neon.mp3",
     "gainDb": -20
   },
   "scenes": [
     {
-      "text": "Hôm nay là 20/11. Hỉ ngồi nhớ lại những người đã dạy mình.",
-      "highlight": "nhớ lại",
+      "text": "Chatbot đợi bạn hỏi. AI Agent tự làm việc khi bạn đi ngủ.",
+      "highlight": "tự làm việc",
       "kind": "hook",
       "startMs": 0,
       "endMs": 0,
       "visual": {
-        "type": "icons",
-        "icons": [
-          "book",
-          "heart"
-        ],
-        "label": "20/11"
-      }
-    },
-    {
-      "text": "Không phải họ dạy mình công thức. Mà dạy cách đặt câu hỏi.",
-      "highlight": "cách đặt câu hỏi",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
         "type": "compare",
-        "title": "Học gì",
-        "before": "Công thức",
-        "after": "Cách hỏi"
+        "title": "Khác nhau",
+        "before": "Chatbot: đợi hỏi",
+        "after": "Agent: tự làm"
       }
     },
     {
-      "text": "Cô dạy Hỉ đọc chậm lại, để hiểu chữ đang nói gì.",
-      "highlight": "đọc chậm lại",
+      "text": "Một agent là một nhân viên ảo. Nhận việc, rồi tự chạy đến xong.",
+      "highlight": "nhân viên ảo",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
-        "type": "icons",
-        "icons": [
-          "eye",
-          "book"
-        ],
-        "label": "Hiểu trước"
+        "type": "wordcard",
+        "title": "AI Agent",
+        "word": "agent",
+        "phonetic": "/ˈeɪ.dʒənt/",
+        "meaning": "Nhân viên ảo: nhận mục tiêu, tự quyết các bước, tự chạy đến xong.",
+        "example": "Agent tự viết bài, tự làm ảnh, tự hẹn giờ đăng."
       }
     },
     {
-      "text": "Thầy bắt Hỉ đứng dậy trình bày, dù giọng lúc đó còn run.",
-      "highlight": "còn run",
+      "text": "Ba thứ tạo nên agent: mục tiêu, công cụ, và bộ nhớ.",
+      "highlight": "mục tiêu, công cụ, và bộ nhớ",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
-        "type": "steps",
-        "title": "Bài học đầu",
+        "type": "formula",
+        "title": "Công thức agent",
+        "formula": "Agent = Mục tiêu + Công cụ + Nhớ",
         "steps": [
-          "Đứng dậy",
-          "Mở miệng",
-          "Kể lại",
-          "Tự tin hơn"
+          "Mục tiêu: việc cần xong",
+          "Công cụ: Sheet, Drive, Buffer",
+          "Nhớ: lịch sử các lần chạy"
+        ],
+        "result": "→ Tự chạy mỗi ngày"
+      }
+    },
+    {
+      "text": "Một dòng lệnh khai báo agent: mục tiêu, công cụ, rồi bộ nhớ.",
+      "highlight": "một dòng lệnh",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "code",
+        "language": "python",
+        "title": "Cài đặt agent",
+        "lines": [
+          "agent = Agent(",
+          "  goal=\"nuôi kênh mỗi ngày\",",
+          "  tools=[Sheet, Drive, Buffer],",
+          "  memory=True",
+          ")"
+        ],
+        "cues": [
+          "dòng lệnh",
+          "khai báo agent",
+          "mục tiêu",
+          "công cụ",
+          "bộ nhớ"
         ]
       }
     },
     {
-      "text": "Có người chỉ dạy một tiết. Nhưng để lại cách nhìn suốt đời.",
-      "highlight": "cách nhìn suốt đời",
+      "text": "Mỗi sáng 8h30, một đồng hồ báo thức đánh thức agent.",
+      "highlight": "đồng hồ báo thức",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
-        "type": "icons",
-        "icons": [
-          "spark",
-          "star"
-        ],
-        "label": "Một tiết học"
+        "type": "html",
+        "full": true,
+        "html": "<div class='ag-wrap'><div class='ag-kicker'>Lịch chạy tự động</div><div class='ag-clock'><svg viewBox='0 0 300 300'><circle class='tr' cx='150' cy='150' r='130'></circle><circle class='pg' id='apg' cx='150' cy='150' r='130'></circle></svg><div class='ag-mid'><b id='ahn'>08:30</b><span>mỗi sáng</span></div></div><div class='ag-steps'><div class='ag-s' id='as1'><b>8h30</b><span>tạo nội dung</span></div><div class='ag-s' id='as2'><b>12h00</b><span>bài đầu lên sóng</span></div><div class='ag-s' id='as3'><b>15h00</b><span>bài thứ hai</span></div></div></div>",
+        "css": ".ag-wrap{position:absolute;left:7%;right:7%;top:11%;height:46%;display:flex;flex-direction:column;justify-content:center;gap:22px}.ag-kicker{font-size:25px;letter-spacing:.15em;text-transform:uppercase;color:#00d4ff;font-weight:800}.ag-clock{position:relative;width:340px;height:340px;max-height:52%;align-self:center}.ag-clock svg{width:100%;height:100%;transform:rotate(-90deg)}.ag-clock .tr{fill:none;stroke:rgba(200,220,255,.13);stroke-width:10}.ag-clock .pg{fill:none;stroke:#00d4ff;stroke-width:10;stroke-linecap:round;stroke-dasharray:817;stroke-dashoffset:817;filter:drop-shadow(0 0 12px rgba(0,212,255,.6))}.ag-mid{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}.ag-mid b{font-size:76px;font-weight:900;color:#eaf6ff;line-height:1;font-variant-numeric:tabular-nums}.ag-mid span{font-size:23px;color:#9bb3c4}.ag-steps{display:flex;flex-direction:column;gap:14px}.ag-s{display:flex;align-items:center;gap:22px;padding:16px 24px;border-radius:18px;background:rgba(200,220,255,.06);border:1px solid rgba(200,220,255,.14);opacity:0}.ag-s b{font-size:32px;font-weight:800;color:#00d4ff;width:120px}.ag-s span{font-size:28px;color:#eaf6ff}",
+        "anim": "const p = ease(span(t, 0.3, 2.4));\n$('apg').style.strokeDashoffset = 817 - 817*p;\n$('as1').style.opacity = ease(span(t,0.6,1.1));\n$('as2').style.opacity = ease(span(t,1.4,1.9));\n$('as3').style.opacity = ease(span(t,2.2,2.7));\n"
       }
     },
     {
-      "text": "Thầy cô không biết hết tên học trò sau này. Vẫn dạy như thể từng người đều quan trọng.",
-      "highlight": "từng người đều quan trọng",
+      "text": "Hết model free? Tự đổi model. Hết chìa khóa Google? Tự làm mới.",
+      "highlight": "tự đổi model",
       "kind": "body",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "list",
-        "title": "Vẫn dạy",
+        "title": "Tự sửa lỗi",
         "items": [
-          "Giải thích lại",
-          "Chờ bạn hiểu",
-          "Không bỏ cuộc",
-          "Tin bạn giỏi hơn"
+          "Hết model → đổi model",
+          "Hết token → tự refresh",
+          "Lỗi render → báo Telegram"
         ]
       }
     },
     {
-      "text": "Hôm nay Hỉ gửi lời cảm ơn đến mọi thầy cô, dù đã hay còn đang đứng trên bục giảng.",
-      "highlight": "lời cảm ơn",
-      "kind": "body",
-      "startMs": 0,
-      "endMs": 0,
-      "visual": {
-        "type": "phone",
-        "title": "Gửi thầy cô",
-        "messages": [
-          {
-            "from": "you",
-            "text": "Con nhớ lời thầy dạy"
-          },
-          {
-            "from": "them",
-            "text": "Cứ đặt câu hỏi nhé"
-          },
-          {
-            "from": "you",
-            "text": "Con vẫn đang hỏi"
-          },
-          {
-            "from": "them",
-            "text": "Ừ, thế là được"
-          }
-        ]
-      }
-    },
-    {
-      "text": "Còn bạn, có một người thầy hay người cô nào bạn nhớ mãi? Comment tên họ bên dưới nhé.",
-      "highlight": "nhớ mãi",
+      "text": "Bạn chỉ cần duyệt chủ đề. Mười lăm phút sáng kiểm tra, phần còn lại agent làm.",
+      "highlight": "duyệt chủ đề",
       "kind": "cta",
       "startMs": 0,
       "endMs": 0,
       "visual": {
         "type": "icons",
         "icons": [
-          "heart",
-          "users"
+          "check",
+          "spark",
+          "rocket"
         ],
-        "label": "Cảm ơn thầy cô"
+        "label": "Kênh tự chạy"
       }
     }
   ],
-  "totalMs": 24000,
+  "totalMs": 21000,
   "hasAudio": false
 }
