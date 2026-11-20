@@ -152,9 +152,10 @@ Khi 11 loại trên không diễn tả được ý bạn muốn, viết thẳng 
 - **Hợp đồng giống hệt `video-html`**: `anim(t, el)` là **hàm thuần theo `t`** (giây, tính từ đầu scene),
 mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước. Vì vậy một cảnh viết cho pipeline
 `chup-nhanh.py` chạy được ở đây gần như nguyên vẹn.
-- Có sẵn `ease, span, lock, clamp, $` (giống bộ helper bên đó), `$` tìm trong chính visual và
-  nhận cả `$('b1')` lẫn `$('#b1')`. Nhận cả dạng thân hàm lẫn `function(t, el){...}` dán nguyên
-  từ `do-hoa/*.html` của repo `video-html`.
+- Có sẵn `ease, span, lock, clamp, sc, $` (giống bộ helper bên đó), `$` tìm trong chính visual và
+  nhận cả `$('b1')` lẫn `$('#b1')`. `sc(720)` là 720px thiết kế trên khung thật — dùng khi `anim`
+  tự tính kích thước theo px (ví dụ vòng tròn lớn dần). Nhận cả dạng thân hàm lẫn
+  `function(t, el){...}` dán nguyên từ `do-hoa/*.html` của repo `video-html`.
 - **Cô lập**: markup nằm trong shadow root nên `h1`, `.card` của bạn không đụng caption/chrome.
 - **Tự co giãn**: viết số đo bằng `px` trên khung tham chiếu **1080×720** của dải hình. Mỗi `Npx`
   được đổi thành `calc(N * var(--u))`, và `--u` đo từ khung thật của cảnh — 1.0 trên 9:16,
@@ -170,8 +171,10 @@ mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước.
 - Đây là **mã do chủ repo viết**, giống một template — đừng nhận `html`/`anim` từ người lạ.
 
 Ví dụ dùng thật: `brief_html_demo.json` (biểu đồ đường cong trí quên, chuyển từ kiểu vẽ của
-`video-html`) và `brief_html_full_demo.json` (vòng 52 tuần dùng `full: true`, cộng một lưới tuần
-để thấy cùng một cách viết px co giãn theo khung).
+`video-html`), `brief_html_full_demo.json` (vòng 52 tuần dùng `full: true`, cộng một lưới tuần
+để thấy cùng một cách viết px co giãn theo khung) và `brief_html_scenes.json` — ba cảnh chuyển
+thẳng từ `video-html`: **vòng trường nhìn** (hai vòng đồng tâm), **quét cụm chữ** (ô ngắm chạy
+theo từng cụm) và **lưới ô nhớ tràn** (ô mới đẩy ô cũ thành màu cảnh báo).
 - Cả ba đều vẽ bằng React/SVG, không tải gì thêm — render trên CI vẫn offline.
 - Giới hạn để không tràn khung: `word` ≤ 34 ký tự, `meaning` ≤ 110, code ≤ 8 dòng (≤ 46 ký tự/dòng),
 công thức ≤ 34 ký tự, ≤ 4 bước. Quality gate cảnh báo khi vượt.

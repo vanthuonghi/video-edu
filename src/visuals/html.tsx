@@ -20,7 +20,8 @@ import { clamp, useStage, VISUAL_BOTTOM, VISUAL_TOP } from "../stage";
  * `Npx` is rewritten to `calc(N * var(--u))`, and `--u` is measured from the
  * band that actually exists this frame — 1.0 on 9:16, ~0.7 on 1:1/16:9, and
  * the full frame when `full: true`. One fragment therefore fits 4:5, 1:1 and
- * 16:9 without being rewritten per format.
+ * 16:9 without being rewritten per format. `anim` gets the same multiplier as
+ * `sc(px)` for numbers it computes at runtime.
  */
 
 /** Reference canvas a fragment's px values are authored against. */
@@ -30,6 +31,7 @@ const DESIGN_H = 720;
 const BASE_CSS = `
   :host { display: block; width: 100%; height: 100%; }
   #hv-root {
+    position: relative;
     width: 100%;
     height: 100%;
     box-sizing: border-box;
@@ -90,7 +92,7 @@ type Anim = (t: number, el: Element) => void;
  */
 type Compiled = { fn: Anim | null; error: string | null };
 
-const compile = (source: string): Compiled => {
+const compile = (source: string, unit: number): Compiled => {
   const code = source.trim();
   if (!code) return { fn: null, error: null };
   const match = code.match(FUNCTION_FORM);
@@ -105,6 +107,7 @@ const compile = (source: string): Compiled => {
       "lock",
       "clamp",
       "$",
+      "sc",
       body,
     ) as (
       t: number,
@@ -114,6 +117,7 @@ const compile = (source: string): Compiled => {
       lock: (x: number, a: number, b: number) => number,
       clamp: (x: number, a: number, b: number) => number,
       $: (id: string) => Element | null,
+      sc: (px: number) => number,
     ) => void;
 
     return {
@@ -128,6 +132,9 @@ const compile = (source: string): Compiled => {
           // video-html passes bare ids (`$('e1f')`); accept '#id' too so a
           // fragment copied from jQuery-style code still resolves.
           (id) => el.querySelector(id.trim().startsWith("#") ? id.trim() : `#${id.trim()}`),
+          // `sc(720)` is 720 design px on the current box: the same factor the
+          // CSS rewrite applies, for widths anims compute at runtime.
+          (px) => px * unit,
         ),
       error: null,
     };
@@ -161,13 +168,14 @@ export const HtmlVisual: React.FC<{
   const { fps, width, height } = useVideoConfig();
   const { padX } = useStage();
   const host = useRef<HTMLDivElement>(null);
-  const compiled = useMemo(() => compile(visual.anim || ""), [visual.anim]);
 
   // The box this fragment really gets: the visual band, or the whole frame for
   // `full: true`. `--u` is 1.0 when that box is the 1080x720 reference.
   const boxW = visual.full ? width : width - padX * 2;
   const boxH = visual.full ? height : height * (VISUAL_BOTTOM - VISUAL_TOP);
   const unit = clamp(Math.min(boxW / DESIGN_W, boxH / DESIGN_H), 0.15, 4);
+
+  const compiled = useMemo(() => compile(visual.anim || "", unit), [visual.anim, unit]);
 
   const markup = useMemo(
     () => resolveAssets(scaleInlineStyles(visual.html)),

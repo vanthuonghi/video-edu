@@ -1,0 +1,44 @@
+{
+  "topic": "đọc cụm: trường nhìn và trí nhớ tạm thời",
+  "theme": "neon",
+  "format": "9:16",
+  "voice": "vi-VN-HoaiMyNeural",
+  "caption": "karaoke",
+  "music": "neon",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Mắt chỉ nhìn rõ một chữ, nhưng vùng nhận dạng quanh nó rộng hơn nhiều.",
+      "highlight": "vùng nhận dạng",
+      "kind": "body",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Hai vùng trường nhìn</div><div class='eyewrap'><div class='ring outer' id='r1'></div><div class='ring inner' id='r2'></div><div class='eyedot'></div></div><div class='legend'><span class='l1'>Vùng nhìn rõ</span><span class='l2'>Vùng nhận dạng chữ</span></div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.eyewrap{position:relative;width:100%;height:500px;display:grid;place-items:center}.ring{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:50%;border:5px dashed #00d4ff;opacity:0}.ring.inner{border-style:solid;border-color:#ff2e88}.eyedot{width:34px;height:34px;border-radius:50%;background:#eaf6ff;box-shadow:0 0 34px rgba(234,246,255,.65)}.legend{display:flex;gap:40px;justify-content:center;font-size:28px;margin-top:4px}.legend .l1{color:#ff2e88}.legend .l2{color:#00d4ff}",
+        "anim": "const o = ease(span(t, 0.3, 2.0));\nconst i = ease(span(t, 1.2, 2.6));\nconst r1 = $('r1'), r2 = $('r2');\nconst s1 = sc(290 + o * 350);\nr1.style.opacity = o; r1.style.width = s1 + 'px'; r1.style.height = s1 + 'px';\nconst s2 = sc(110 + i * 90);\nr2.style.opacity = i; r2.style.width = s2 + 'px'; r2.style.height = s2 + 'px';\n"
+      }
+    },
+    {
+      "text": "Đọc theo cụm: một lần dừng ba tới năm chữ, mắt bớt dừng lại.",
+      "highlight": "ba tới năm chữ",
+      "kind": "body",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Đọc theo cụm</div><div class='cluster' id='cl1'><span class='cw dim'>Mắt</span><span class='cw dim'>đọc</span><span class='cw sharp'>theo</span><span class='cw dim'>cả</span><span class='cw dim'>cụm</span></div><div class='reticle' id='ret1'></div><div class='sub'>Một lần dừng lấy ba tới năm chữ, thay vì từng chữ một.</div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.cluster{display:flex;gap:24px;justify-content:center;font-weight:800}.cw{font-size:60px;font-weight:800;color:#485754}.cw.sharp{color:#eaf6ff}.reticle{position:absolute;left:0;top:0;border:5px solid #00d4ff;border-radius:18px;opacity:0;box-shadow:0 0 26px rgba(0,212,255,.5)}.sub{font-size:30px;line-height:1.4;color:#9bb3c4;margin-top:54px;text-align:center}",
+        "anim": "const ws = el.querySelectorAll('.cw'), ret = el.querySelector('.reticle');\nconst prog = clamp(span(t, 0.4, 3.0), 0, 1) * (ws.length - 1);\nws.forEach(function(w, i){ w.classList.toggle('sharp', Math.abs(i - prog) < 0.5); });\nconst cur = Math.min(Math.max(prog, 0.001), ws.length - 1.001);\nconst li = Math.floor(cur);\nconst a = ws[li].getBoundingClientRect();\nconst b = ws[Math.min(li + 1, ws.length - 1)].getBoundingClientRect();\nconst hr = el.getBoundingClientRect();\nconst frac = cur - li;\nconst x = (a.left - hr.left) + ((b.left - a.left) * frac) - sc(12);\nret.style.transform = 'translate(' + x + 'px,' + (a.top - hr.top - sc(10)) + 'px)';\nret.style.width = (a.width + sc(24)) + 'px';\nret.style.height = (a.height + sc(20)) + 'px';\nret.style.opacity = 1;\n"
+      }
+    },
+    {
+      "text": "Trí nhớ tạm thời chỉ giữ năm tới mười phút, phần cũ bị đẩy ra.",
+      "highlight": "phần cũ bị đẩy ra",
+      "kind": "body",
+      "visual": {
+        "type": "html",
+        "html": "<div class='wrap'><div class='kicker'>Trí nhớ tạm thời như bảng trắng</div><div class='grid'><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span><span class='blk'></span></div><div class='badge' id='bd'><span class='t'>Giữ được</span><span class='v'>5–10 phút</span></div></div>",
+        "css": ".wrap{height:100%;display:flex;flex-direction:column;justify-content:center;align-items:center}.kicker{font-size:30px;letter-spacing:.14em;text-transform:uppercase;color:#00d4ff;font-weight:800;margin-bottom:10px;text-align:center}.grid{display:grid;grid-template-columns:repeat(8,1fr);gap:16px;width:100%;max-width:1000px;margin-top:14px}.blk{height:86px;border-radius:12px;background:#00d4ff;opacity:0}.badge{display:inline-flex;align-items:center;gap:16px;margin-top:26px;background:rgba(234,246,255,.06);border:2px solid rgba(234,246,255,.16);border-radius:999px;padding:14px 32px;opacity:0}.badge .t{font-size:30px;color:#9bb3c4}.badge .v{font-size:52px;font-weight:800;color:#eaf6ff}",
+        "anim": "const blocks = el.querySelectorAll('.blk');\nconst filled = ease(span(t, 0.3, 1.8)) * blocks.length;\nblocks.forEach(function(b, i){\n  const on = i < filled;\n  b.style.opacity = on ? 1 : 0;\n  b.style.background = '#00d4ff';\n  if (on) { const age = filled - i; b.style.opacity = age < 3 ? 0.45 : 1; }\n});\nconst drop = ease(span(t, 2.0, 2.7));\nif (drop > 0) {\n  const keepFrom = Math.floor(blocks.length * 0.75);\n  blocks.forEach(function(b, i){\n    if (i < keepFrom) { b.style.opacity = 1 - drop * 0.85; b.style.background = '#7a2341'; }\n  });\n}\n$('bd').style.opacity = ease(span(t, 2.4, 2.9));\n"
+      }
+    }
+  ]
+}
