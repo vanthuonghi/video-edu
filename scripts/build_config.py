@@ -149,6 +149,12 @@ def build(brief):
     voice = str(brief.get("voice") or DEFAULTS["voice"])
     voice = VOICES.get(voice, voice)
 
+    # A config read back from disk carries caption as {"effect": ...}; accept
+    # either the object or the effect name here.
+    caption = brief.get("caption") or DEFAULTS["caption"]
+    if isinstance(caption, dict):
+        caption = caption.get("effect") or DEFAULTS["caption"]
+
     return {
         "topic": topic,
         "theme": theme,
@@ -157,7 +163,7 @@ def build(brief):
         "width": int(brief.get("width") or width),
         "height": int(brief.get("height") or height),
         "fps": int(brief.get("fps") or 30),
-        "caption": {"effect": brief.get("caption") or DEFAULTS["caption"]},
+        "caption": {"effect": caption},
         "chrome": {"brand": True, "counter": True, "progress": True},
         "music": music_cfg,
         "scenes": scenes,

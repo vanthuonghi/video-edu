@@ -130,24 +130,10 @@ jobs:
       - name: Prepare voice + timings
         run: python3 scripts/prepare.py
 
-      - name: Probe forced aligner
-        run: |
-          python3 scripts/align.py --selftest
-          python3 - <<'PY'
-          import glob, sys
-          sys.path.insert(0, "scripts")
-          clips = sorted(glob.glob("public/_tts/*.mp3"))
-          if not clips:
-              print("PROBE: no scene clips to measure")
-              raise SystemExit(0)
-          try:
-              import align
-              words = align.heard_words(clips[0])
-              print(f"PROBE: {clips[0]} -> {len(words)} words",
-                    [(w["t"], w["s"], w["e"]) for w in words[:5]])
-          except Exception as exc:
-              print(f"PROBE FAILED: {type(exc).__name__}: {exc}")
-          PY
+      - name: Check forced aligner
+        # prepare.py already measured every scene; this only proves the
+        # transcript -> script mapping still works on this runner.
+        run: python3 scripts/align.py --selftest
 
       - name: Quality gate
         run: python3 scripts/check_quality.py
