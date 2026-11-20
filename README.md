@@ -165,6 +165,9 @@ mỗi khung tự tính lại toàn bộ style, không dựa vào khung trước.
 - **`full: true`** vẽ tràn cả khung thay vì nằm trong dải trên — dùng khi hình tự lo bố cục;
   caption vẫn nằm trên cùng nên chừa vùng dưới.
 - Ảnh: dùng `{{asset:images/x.jpg}}` (được đổi thành URL `staticFile`), không dùng đường dẫn tương đối.
+- **Đừng đo hình học**: `getBoundingClientRect()` trong `anim` trả toạ độ của khung chụp bị dịch chỗ
+  (đã đo được `top ≈ -999836`, `width = 0`), nên một ô ngắm chạy theo rect sẽ nhảy về góc. Dùng
+  `%`, `sc()`, hoặc để CSS lo — ví dụ viền `outline` của chính từ đang đọc thay cho hộp chạy theo toạ độ.
 - **Không tải gì từ mạng** (CI chạy offline) và **không có `<script>`**: mọi thứ chạy trong `anim`.
 - Gate chặn: thiếu `html`, quá 8000 ký tự, có `<script>`, có `http(s)://`; cảnh báo khi `anim`
   dùng `document./window./setTimeout/requestAnimationFrame/Math.random/Date.now` (khung sẽ không tất định).
