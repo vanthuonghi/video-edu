@@ -1,0 +1,89 @@
+{
+  "topic": "Phương pháp Cornell - Ghi chú để nhớ lâu hơn",
+  "theme": "neon",
+  "format": "9:16",
+  "caption": "karaoke",
+  "music": "neon",
+  "voice": "vi-VN-HoaiMyNeural",
+  "brand": "Văn Hỉ Official",
+  "scenes": [
+    {
+      "text": "Đọc xong một trang sách, gập lại là quên gần hết?",
+      "highlight": "quên gần hết",
+      "visual": {
+        "type": "icons",
+        "icons": ["book", "eye"],
+        "label": "Đọc thụ động"
+      }
+    },
+    {
+      "text": "Không phải trí nhớ bạn kém. Chỉ là bạn chưa ghi đúng cách.",
+      "highlight": "chưa ghi đúng cách",
+      "visual": {
+        "type": "compare",
+        "title": "Đọc vs Ghi",
+        "before": "Đọc rồi quên",
+        "after": "Ghi rồi nhớ"
+      }
+    },
+    {
+      "text": "Cornell chia mỗi trang giấy thành bốn phần.",
+      "highlight": "bốn phần",
+      "visual": {
+        "type": "steps",
+        "title": "Trang Cornell",
+        "steps": ["Tiêu đề", "Ghi chú", "Câu hỏi", "Tóm tắt"]
+      }
+    },
+    {
+      "text": "Đầu trang là tiêu đề. Ghi đúng chủ đề bạn đang học.",
+      "highlight": "tiêu đề",
+      "visual": {
+        "type": "icons",
+        "icons": ["doc", "target"],
+        "label": "Chủ đề"
+      }
+    },
+    {
+      "text": "Bên phải là cột ghi chú. Viết bằng từ của chính bạn.",
+      "highlight": "từ của chính bạn",
+      "visual": {
+        "type": "list",
+        "title": "Cột ghi chú",
+        "items": ["Ý chính", "Ví dụ", "Con số", "Liên tưởng"]
+      }
+    },
+    {
+      "text": "Bên trái là cột câu hỏi. Biến mỗi ý thành một câu hỏi.",
+      "highlight": "câu hỏi",
+      "visual": {
+        "type": "phone",
+        "title": "Tự hỏi",
+        "messages": [
+          {"from": "you", "text": "Ý chính là gì?"},
+          {"from": "ai", "text": "Viết lại bằng từ của bạn"},
+          {"from": "you", "text": "Áp dụng thế nào?"}
+        ]
+      }
+    },
+    {
+      "text": "Cuối trang là ba dòng tóm tắt. Tự viết lại từ đầu.",
+      "highlight": "ba dòng",
+      "visual": {
+        "type": "counter",
+        "value": 3,
+        "unit": "dòng",
+        "label": "Tóm tắt"
+      }
+    },
+    {
+      "text": "Che cột phải lại, tự trả lời rồi đối chiếu. Nhớ lâu hơn gấp bội.",
+      "highlight": "nhớ lâu hơn",
+      "visual": {
+        "type": "icons",
+        "icons": ["check", "spark"],
+        "label": "Ôn tập chủ động"
+      }
+    }
+  ]
+}

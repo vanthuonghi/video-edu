@@ -48,6 +48,11 @@ on:
         required: false
         default: "neon"
         type: string
+      preview_only:
+        description: "Chỉ render ảnh preview, không render video / release"
+        required: false
+        default: false
+        type: boolean
 
 # A second dispatch while one render is running replaces the first: the script
 # is written to the same config file, so two parallel renders would fight.
@@ -170,10 +175,11 @@ jobs:
           retention-days: 7
 
       - name: Render video
+        if: success() && github.event.inputs.preview_only != 'true'
         run: npx remotion render src/Root.tsx Video out/video.mp4 --codec h264 --crf 18 --concurrency 4
 
       - name: Publish the latest render
-        if: success()
+        if: success() && github.event.inputs.preview_only != 'true'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
@@ -185,6 +191,7 @@ jobs:
             --notes "Commit ${GITHUB_SHA:0:7} · run ${GITHUB_RUN_NUMBER} · $(date -u +'%Y-%m-%d %H:%M UTC')"
 
       - name: Upload video artifact
+        if: success() && github.event.inputs.preview_only != 'true'
         uses: actions/upload-artifact@v4
         with:
           name: video-edu-video
@@ -193,6 +200,8 @@ jobs:
 
       - name: Summary
         if: success()
+        env:
+          PREVIEW_ONLY: ${{ github.event.inputs.preview_only }}
         run: |
           python3 - <<'PY'
           import json
@@ -205,4 +214,4 @@ jobs:
           print(f"Download: https://github.com/{__import__('os').environ['GITHUB_REPOSITORY']}"
                 "/releases/download/latest/video.mp4")
           PY
-          ls -lh out/video.mp4
+          if [ "${PREVIEW_ONLY}" != "true" ]; then ls -lh out/video.mp4; fi
