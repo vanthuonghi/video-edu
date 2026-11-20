@@ -1,8 +1,12 @@
 {
-  "topic": "học từ vựng tiếng Anh",
+  "topic": "Phương pháp Cornell - Ghi chú để nhớ lâu hơn",
   "theme": {
     "id": "neon",
-    "bg": ["#000814", "#001028", "#000814"],
+    "bg": [
+      "#000814",
+      "#001028",
+      "#000814"
+    ],
     "text": "#eaf6ff",
     "accent": "#00d4ff",
     "muted": "#ff2e88"
@@ -12,98 +16,150 @@
   "width": 1080,
   "height": 1920,
   "fps": 30,
-  "caption": { "effect": "karaoke" },
-  "chrome": { "brand": true, "counter": true, "progress": true },
-  "music": { "track": "music/bed-neon.mp3", "gainDb": -20 },
+  "caption": {
+    "effect": "karaoke"
+  },
+  "chrome": {
+    "brand": true,
+    "counter": true,
+    "progress": true
+  },
+  "music": {
+    "track": "music/bed-neon.mp3",
+    "gainDb": -20
+  },
   "scenes": [
     {
-      "text": "Học 50 từ một lúc, mai quên gần hết?",
+      "text": "Đọc xong một trang sách, gập lại là quên gần hết?",
       "highlight": "quên gần hết",
       "kind": "hook",
-      "visual": { "type": "icons", "icons": ["spark"], "label": "Trí nhớ ngắn hạn" },
       "startMs": 0,
-      "endMs": 3400
+      "endMs": 0,
+      "visual": {
+        "type": "icons",
+        "icons": [
+          "book",
+          "eye"
+        ],
+        "label": "Đọc thụ động"
+      }
     },
     {
-      "text": "Không phải trí nhớ bạn kém.",
-      "highlight": "trí nhớ",
+      "text": "Không phải trí nhớ bạn kém. Chỉ là bạn chưa ghi đúng cách.",
+      "highlight": "chưa ghi đúng cách",
       "kind": "body",
-      "visual": "auto",
-      "startMs": 3500,
-      "endMs": 6400
-    },
-    {
-      "text": "Học dồn một lúc không bằng học đều mỗi ngày.",
-      "highlight": "đều mỗi ngày",
-      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
       "visual": {
         "type": "compare",
-        "before": "50 từ trong một tối",
-        "after": "5 từ mỗi ngày"
-      },
-      "startMs": 6500,
-      "endMs": 11000
+        "title": "Đọc vs Ghi",
+        "before": "Đọc rồi quên",
+        "after": "Ghi rồi nhớ"
+      }
     },
     {
-      "text": "Chia nhỏ mục tiêu thành 5 từ mỗi ngày.",
-      "highlight": "5 từ",
+      "text": "Cornell chia mỗi trang giấy thành bốn phần.",
+      "highlight": "bốn phần",
       "kind": "body",
-      "visual": { "type": "counter", "value": "5", "unit": "từ", "label": "mỗi ngày" },
-      "startMs": 11100,
-      "endMs": 14200
-    },
-    {
-      "text": "Ôn lại sau 1 ngày, 3 ngày và 7 ngày.",
-      "highlight": "7 ngày",
-      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
       "visual": {
         "type": "steps",
-        "title": "Lịch ôn tập",
-        "steps": ["Sau 1 ngày", "Sau 3 ngày", "Sau 7 ngày"]
-      },
-      "startMs": 14300,
-      "endMs": 18400
-    },
-    {
-      "text": "Mỗi lần ôn chỉ mất khoảng 2 phút.",
-      "highlight": "2 phút",
-      "kind": "body",
-      "visual": {
-        "type": "bars",
-        "title": "Thời gian mỗi ngày",
-        "unit": "phút",
-        "values": [
-          { "label": "Học mới", "value": 12 },
-          { "label": "Ôn lại", "value": 2 }
+        "title": "Trang Cornell",
+        "steps": [
+          "Tiêu đề",
+          "Ghi chú",
+          "Câu hỏi",
+          "Tóm tắt"
         ]
-      },
-      "startMs": 18500,
-      "endMs": 21800
+      }
     },
     {
-      "text": "Đặt từ vào câu bạn tự nói mỗi ngày.",
-      "highlight": "tự nói",
+      "text": "Đầu trang là tiêu đề. Ghi đúng chủ đề bạn đang học.",
+      "highlight": "tiêu đề",
       "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "icons",
+        "icons": [
+          "doc",
+          "target"
+        ],
+        "label": "Chủ đề"
+      }
+    },
+    {
+      "text": "Bên phải là cột ghi chú. Viết bằng từ của chính bạn.",
+      "highlight": "từ của chính bạn",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "list",
+        "title": "Cột ghi chú",
+        "items": [
+          "Ý chính",
+          "Ví dụ",
+          "Con số",
+          "Liên tưởng"
+        ]
+      }
+    },
+    {
+      "text": "Bên trái là cột câu hỏi. Biến mỗi ý thành một câu hỏi.",
+      "highlight": "câu hỏi",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
       "visual": {
         "type": "phone",
-        "title": "Ghi chú hôm nay",
+        "title": "Tự hỏi",
         "messages": [
-          { "from": "them", "text": "Hôm nay bạn học gì?" },
-          { "from": "me", "text": "I learn five new words." }
+          {
+            "from": "you",
+            "text": "Ý chính là gì?"
+          },
+          {
+            "from": "ai",
+            "text": "Viết lại bằng từ của bạn"
+          },
+          {
+            "from": "you",
+            "text": "Áp dụng thế nào?"
+          }
         ]
-      },
-      "startMs": 21900,
-      "endMs": 25800
+      }
     },
     {
-      "text": "Lưu lại và bắt đầu ngay hôm nay.",
-      "highlight": "hôm nay",
+      "text": "Cuối trang là ba dòng tóm tắt. Tự viết lại từ đầu.",
+      "highlight": "ba dòng",
+      "kind": "body",
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "counter",
+        "value": 3,
+        "unit": "dòng",
+        "label": "Tóm tắt"
+      }
+    },
+    {
+      "text": "Che cột phải lại, tự trả lời rồi đối chiếu. Nhớ lâu hơn gấp bội.",
+      "highlight": "nhớ lâu hơn",
       "kind": "cta",
-      "visual": { "type": "icons", "icons": ["heart", "bell"] },
-      "startMs": 25900,
-      "endMs": 29000
+      "startMs": 0,
+      "endMs": 0,
+      "visual": {
+        "type": "icons",
+        "icons": [
+          "check",
+          "spark"
+        ],
+        "label": "Ôn tập chủ động"
+      }
     }
   ],
-  "totalMs": 29000,
+  "totalMs": 24000,
   "hasAudio": false
 }
