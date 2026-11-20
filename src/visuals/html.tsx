@@ -80,7 +80,9 @@ const compile = (source: string): Compiled => {
           (value, a, b) => (value - a) / (b - a),
           (x, a, b) => Math.max(a, Math.min(b, x)),
           (x, a, b) => Math.max(a, Math.min(b, x)),
-          (id) => el.querySelector(`#${id}`),
+          // video-html passes bare ids (`$('e1f')`); accept '#id' too so a
+          // fragment copied from jQuery-style code still resolves.
+          (id) => el.querySelector(id.trim().startsWith("#") ? id.trim() : `#${id.trim()}`),
         ),
       error: null,
     };
@@ -139,15 +141,6 @@ export const HtmlVisual: React.FC<{
     const surface = root.querySelector("#hv-root");
     if (!surface) return;
     if (compiled.error) showError(surface, compiled.error);
-    {
-      const dbg = document.createElement("div");
-      dbg.setAttribute(
-        "style",
-        "position:absolute;left:0;bottom:0;padding:8px 12px;background:#000;color:#0f0;font:600 18px monospace;z-index:10",
-      );
-      dbg.textContent = `DBG t=${(frame / fps).toFixed(2)} anim=${typeof visual.anim}:${(visual.anim || "").length} fn=${compiled.fn ? "yes" : compiled.error || "none"}`;
-      surface.appendChild(dbg);
-    }
     try {
       // Scene-relative seconds: t=0 is the first frame of this scene.
       compiled.fn?.(frame / fps, surface);
